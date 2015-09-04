@@ -5,40 +5,47 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.stereotype.Component;
+
 import com.mycompany.myapp.dto.Members;
 
+@Component
 public class MemberDao {
 
 private Connection conn;
 	
-	public MemberDao(Connection conn){
-	
-		this.conn = conn;
-	}
-	
-	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
 	public String insert(Members member) throws SQLException{
 		String pk = null;
 		String sql = "insert into members"
 				+ "(member_id, member_password, member_name, member_address, member_tel, member_email, member_point, member_level, member_ordercount)"
 				+ "values(?,?,?,?,?,?,?,?,?)";
 		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, member.getId());
-		pstmt.setString(2, member.getPassword());
-		pstmt.setString(3, member.getName());
-		pstmt.setString(4, member.getAddress());
-		pstmt.setString(5, member.getTel());
-		pstmt.setString(6, member.getEmail());
-		pstmt.setInt(7, member.getPoint());
-		pstmt.setString(8, member.getLevel());
-		pstmt.setInt(9, member.getOrdercount());
-		int row = pstmt.executeUpdate();
-		if(row ==1){
-				pk = member.getId();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection arg0) throws SQLException {
+				
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, member.getId());
+				pstmt.setString(2, member.getPassword());
+				pstmt.setString(3, member.getName());
+				pstmt.setString(4, member.getAddress());
+				pstmt.setString(5, member.getTel());
+				pstmt.setString(6, member.getEmail());
+				pstmt.setInt(7, member.getPoint());
+				pstmt.setString(8, member.getLevel());
+				pstmt.setInt(9, member.getOrdercount());
+				return pstmt;
 			}
-		pstmt.close();
-		return pk;
+		});
+		
+		return member.getId();
 	}
 	
 	public int update(Members member) throws SQLException{
