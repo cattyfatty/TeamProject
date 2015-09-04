@@ -2,10 +2,16 @@ package com.mycompany.myapp.dto;
 
 public class OrderItems {
 	int orderItemNo;
-	int productItemNo;
+	int goodsItemNo;
 	int orderNo;
 	int orderAmount;
 	
+	public int getGoodsItemNo() {
+		return goodsItemNo;
+	}
+	public void setGoodsItemNo(int goodsItemNo) {
+		this.goodsItemNo = goodsItemNo;
+	}
 	public int getOrderAmount() {
 		return orderAmount;
 	}
@@ -18,12 +24,7 @@ public class OrderItems {
 	public void setOrderItemNo(int orderItemNo) {
 		this.orderItemNo = orderItemNo;
 	}
-	public int getProductItemNo() {
-		return productItemNo;
-	}
-	public void setProductItemNo(int productItemNo) {
-		this.productItemNo = productItemNo;
-	}
+	
 	public int getOrderNo() {
 		return orderNo;
 	}

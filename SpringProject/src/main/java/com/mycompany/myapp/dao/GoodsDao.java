@@ -7,138 +7,118 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+
 import com.mycompany.myapp.dto.Goods;
-import com.mycompany.myapp.dto.Product;
-
+@Component
 public class GoodsDao {
-	private Connection conn;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
-	// ������ ���� ���
-	public GoodsDao(Connection conn) {
-		this.conn = conn;
-	}
 
-	// ������ �۾� �޼ҵ�
-	public Integer insert(Goods product) throws SQLException {
+	public Integer insert(Goods goods)  {
 		Integer pk = null;
-		String sql = "insert into products (product_name, product_price, product_calory, product_gift, product_size,product_kind) values ( ?, ?, ?, ?, ?,?)";
-		PreparedStatement pstmt = null;
-		pstmt = conn.prepareStatement(sql, new String[] { "product_no" });
-		pstmt.setString(1, product.getName());
-		pstmt.setInt(2, product.getPrice());
-		pstmt.setInt(3, product.getCalory());
-		pstmt.setString(4, product.getGift());
-		pstmt.setString(5, product.getSize());
-		pstmt.setString(6, product.getKind());
-		int row = pstmt.executeUpdate();
-		if (row == 1) {
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
-				pk = rs.getInt(1);
+		String sql = "insert into goods (goods_name, goods_price, goods_calory, goods_gift, goods_size,goods_kind) values ( ?, ?, ?, ?, ?,?)";
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+				PreparedStatement pstmt = conn.prepareStatement(sql, new String[] { "goods_no" });
+				pstmt.setString(1, goods.getName());
+				pstmt.setInt(2, goods.getPrice());
+				pstmt.setInt(3, goods.getCalory());
+				pstmt.setString(4, goods.getGift());
+				pstmt.setString(5, goods.getSize());
+				pstmt.setString(6, goods.getKind());
+				return pstmt;
 			}
-			rs.close();
-		}
-		pstmt.close();
+		}, keyHolder);
+
+		Number keyNumber = keyHolder.getKey();
+		pk = keyNumber.intValue();
 		return pk;
+		
 	}
 
 	// Update
 
-	public int update(Goods product) throws SQLException {
+	public int update(Goods goods)  {
 		int rows = 0;
-		String sql = "update products set product_name=?, product_price=?, product_calory=?, product_gift=?, product_size=? ,product_kind=? where product_no=?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-
-		pstmt.setString(1, product.getName());
-		pstmt.setInt(2, product.getPrice());
-		pstmt.setInt(3, product.getCalory());
-		pstmt.setString(4, product.getGift());
-		pstmt.setString(5, product.getSize());
-		pstmt.setString(6, product.getKind());
-		pstmt.setInt(7, product.getNo());
-		rows = pstmt.executeUpdate();
-		pstmt.close();
+		
+		String sql = "update goods set goods_name=?, goods_price=?, "
+				+  " goods_calory=?, goods_gift=?, goods_size=? ,goods_kind=? where goods_no=?";
+		
+		rows = jdbcTemplate.update(sql,goods.getName(),goods.getPrice()
+				,goods.getCalory(),goods.getGift(),goods.getSize(),goods.getKind(),goods.getNo());
+		
 		return rows;
 	}
 
 	// Delete
 
-	public int delete(int productNo) throws SQLException {
+	public int delete(int goodsNo)  {
 		int rows = 0;
-		String sql = "delete from prducts where product_no=?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-
-		pstmt.setInt(1, productNo);
-
-		rows = pstmt.executeUpdate();
-		pstmt.close();
+		String sql = "delete from goods where goods_no=?";
+		rows = jdbcTemplate.update(sql, goodsNo);
 		return rows;
 	}
 
-	// �� ���� ���� �������� Select
-
-	public Goods selectByPk(int productNo) throws SQLException {
-
-		Goods product = null;
-
-		String sql = "select * from products where product_no=?";
-
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, productNo);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			product = new Goods();
-			product.setNo(rs.getInt("product_no"));
-			product.setName(rs.getString("product_name"));
-			product.setPrice(rs.getInt("product_price"));
-			product.setCalory(rs.getInt("product_calory"));
-			product.setGift(rs.getString("product_gift"));
-			product.setSize(rs.getString("product_size"));
-			product.setKind(rs.getString("product_kind"));
-		}
-		rs.close();
-		pstmt.close();
-		return product;
+	public Goods selectByPk(int goodsNo) {
+		String sql = "select * from goods where goods_no=?";
+		Goods goods = jdbcTemplate.queryForObject(
+				sql,
+				new Object[] {goodsNo},
+				new RowMapper<Goods> () {
+					@Override
+					public Goods mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Goods goods = new Goods();
+						goods.setNo(rs.getInt("goods_no"));
+						goods.setName(rs.getString("goods_name"));
+						goods.setPrice(rs.getInt("goods_price"));
+						goods.setCalory(rs.getInt("goods_calory"));
+						goods.setGift(rs.getString("goods_gift"));
+						goods.setSize(rs.getString("goods_size"));
+						goods.setKind(rs.getString("goods_kind"));
+						return goods;
+					}
+				});
+		return goods;
 	}
 
-	public List<Goods> selectByPage(int pageNo, int rowsPerPage) throws SQLException {
-		List<Goods> list = new ArrayList<Goods>();
+	public List<Goods> selectByPage(int pageNo, int rowsPerPage){
+		
 		String sql = "";
-		sql += "select rn, product_no, product_name, product_price, product_calory, product_gift, product_size,product_kind ";
-		sql += "from ";
-		sql += "( ";
-		sql += "select rownum rn, product_no, product_name, product_price, product_calory, product_gift, product_size ,product_kind ";
-		sql += "from ";
-		sql += "( ";
-		sql += "select product_no, product_name, product_price, product_calory, product_gift, product_size,product_kind ";
-		sql += "from products ";
-		sql += "order by product_no desc ";
-		sql += ") ";
-		sql += "where rownum<=? ";
-		sql += ") ";
-		sql += "where rn>=? ";
+		sql += " select goods_no, goods_name, goods_price, goods_calory, goods_gift, goods_size,goods_kind ";
+		sql += "from goods ";
+		sql += "order by goods_no desc ";
+		sql += "limit ?,?";
 
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, pageNo * rowsPerPage);
-		pstmt.setInt(2, (pageNo - 1) * rowsPerPage + 1);
+		List<Goods> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
+				new RowMapper<Goods>() {
+					@Override
+					public Goods mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Goods goods = new Goods();
+						goods.setNo(rs.getInt("goods_no"));
+						goods.setName(rs.getString("goods_name"));
+						goods.setPrice(rs.getInt("goods_price"));
+						goods.setCalory(rs.getInt("goods_calory"));
+						goods.setGift(rs.getString("goods_gift"));
+						goods.setSize(rs.getString("goods_size"));
+						goods.setKind(rs.getString("goods_kind"));
 
-		ResultSet rs = pstmt.executeQuery();
+						return goods;
+					}
+				});
 
-		while (rs.next()) {
-
-			Goods product = new Goods();
-			product.setNo(rs.getInt("product_no"));
-			product.setName(rs.getString("product_name"));
-			product.setPrice(rs.getInt("product_price"));
-			product.setCalory(rs.getInt("product_calory"));
-			product.setGift(rs.getString("product_gift"));
-			product.setSize(rs.getString("product_size"));
-			product.setKind(rs.getString("product_kind"));
-			list.add(product);
-
-		}
-		rs.close();
-		pstmt.close();
 		return list;
 
 	}
