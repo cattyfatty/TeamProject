@@ -58,7 +58,7 @@ public class CartDao {
 		}
 
 	
-	public int delete(int MemberId){
+	public int delete(String MemberId){
 		String sql = "delete from carts where member_id=?";
 		int rows = jdbcTemplate.update(
 					sql,
