@@ -21,4 +21,16 @@ public class GoodsProjectController {
 		logger.info("project-login()");
 		return "project/login";
 	}
+	
+	@RequestMapping("/project/joinForm")
+	public String projectJoinForm() {
+		logger.info("project-joinForm");
+		return "project/joinForm";
+	}
+	
+	@RequestMapping("/project/join")
+	public String projectJoin() {
+		logger.info("project-join");
+		return "project/join";
+	}
 }
