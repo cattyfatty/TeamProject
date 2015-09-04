@@ -37,34 +37,27 @@ public class BoardController {
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		// 전체 게시물 수
 		int totalBoardNo = boardService.getTotalBoardNo();
 		
-		// 전체 페이지 수
 		int totalPageNo = totalBoardNo / rowsPerPage;
 		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
 		
-		// 전체 그룹 수
 		int totalGroupNo = totalPageNo / pagesPerGroup;
 		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
 		
-		// 현제 그룹 번호, 시작 페이지 번호, 끝 페이지 번호
 		int groupNo = (pageNo - 1) / pagesPerGroup + 1;
 		int startPageNo = (groupNo - 1) * pagesPerGroup + 1;
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		// 현재 페이지 게시물 리스트
 		List<Board> list = boardService.getPage(pageNo, rowsPerPage);
 		
-		// view로 넘길 데이터
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
 		model.addAttribute("totalGroupNo", totalGroupNo);
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-//		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("list", list);
 		
 		return "board/list";
@@ -85,21 +78,18 @@ public class BoardController {
 		String filesystemName = null;
 		String contentType = null;
 		if(!board.getAttach().isEmpty()) {
-			// 파일 정보 얻기
 			ServletContext application = session.getServletContext();
 			dirPath = application.getRealPath("/resources/uploadfiles");
 			originalFileName = board.getAttach().getOriginalFilename();
 			filesystemName = System.currentTimeMillis() + "-" + originalFileName;
 			contentType = board.getAttach().getContentType();
 			
-			// 파일 저장하기
 			try {
 				board.getAttach().transferTo(new File(dirPath + "/" + filesystemName));
 			} catch (Exception e) {	e.printStackTrace(); }
 			
 		}
 		
-		// 데이터 베이스에 저장
 		if(!board.getAttach().isEmpty()) {
 			board.setOriginalFileName(originalFileName);
 			board.setFilesystemName(filesystemName);

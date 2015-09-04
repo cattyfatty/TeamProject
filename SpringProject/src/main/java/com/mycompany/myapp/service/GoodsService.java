@@ -102,5 +102,19 @@ public class GoodsService {
 		return goods;
 	}
 
+	public int getTotalBoardNo() {
+	int rows = goodsDao.selectCount();
+		
+		return rows;
+
+	}
+
+	public List<Goods> getPage(int pageNo, int rowsPerPage) {
+		
+		List<Goods> list = goodsDao.selectByPage(pageNo, rowsPerPage);
+		
+		return list;
+	}
+
 	// -----------------------------------------------------------------------------------------
 }

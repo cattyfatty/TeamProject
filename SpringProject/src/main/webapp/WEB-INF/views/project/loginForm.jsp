@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-login
+
+
+<div>
+<input type="text" palceholder="¾ÆÀÌµð"></input>
+
+
+</div>
 </body>
 </html>
