@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mycompany.myapp.dto.Board;
 import com.mycompany.myapp.dto.Goods;
 import com.mycompany.myapp.service.GoodsService;
 
@@ -91,5 +92,15 @@ public class GoodsProjectController {
 		return "project/goodsList";
 	}
 	
+	@RequestMapping("/project/goodsDetail")
+
+	public String projectProductdetail(int boardNo, Model model) {
+		logger.info("detail()");
+		
+		Goods goods = goo.getBoard(boardNo);
+		model.addAttribute("board", board);
+		
+		return "project/goodsDetail";
+	}
 	
 }
