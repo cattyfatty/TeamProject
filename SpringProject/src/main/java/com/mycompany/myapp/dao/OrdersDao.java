@@ -23,7 +23,7 @@ public class OrdersDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Integer insert(Orders orders) throws SQLException {
+	public Integer insert(Orders orders) {
 		Integer pk = null;
 		String sql = "insert into orders (order_price, member_id) values (?,?)";
 
