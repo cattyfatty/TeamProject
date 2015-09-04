@@ -27,7 +27,7 @@ public class CartDao {
 	
 	public Integer insert(Cart cart){
 		Integer pk = null;
-		String sql = "insert into carts (cart_amount, member_id, product_no) values (?, ?, ?)";
+		String sql = "insert into carts (cart_amount, member_id, goods_no) values (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			
@@ -36,7 +36,7 @@ public class CartDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"cart_no"});
 				pstmt.setInt(1, cart.getcartAmount());
 				pstmt.setString(2,cart.getmemberId());
-				pstmt.setInt(3, cart.getproductNo());
+				pstmt.setInt(3, cart.getGoods_no());
 				return pstmt;
 			}
 		},keyHolder);
@@ -45,12 +45,12 @@ public class CartDao {
 		return pk;
 	}
 		public int update(Cart cart){
-			String sql = "update carts set cart_amount=?, member_id =?, product_no=? where cart_no=?";
+			String sql = "update carts set cart_amount=?, member_id =?, goods_no=? where cart_no=?";
 			int rows = jdbcTemplate.update(
 						sql,
 						cart.getcartAmount(),
 						cart.getmemberId(),
-						cart.getproductNo(),
+						cart.getGoods_no(),
 						cart.getcartNo()
 					);
 		
@@ -69,7 +69,7 @@ public class CartDao {
 	}
 	
 	public Cart selectByPk(int CartNo){
-		String sql = "select * from Carts where cart_no=?";
+		String sql = "select * from carts where cart_no=?";
 		Cart cart = jdbcTemplate.queryForObject(sql,
 				new Object[]{CartNo},
 				new RowMapper<Cart>(){
@@ -81,7 +81,7 @@ public class CartDao {
 						cart.setcartAmount(rs.getInt("cart_amount"));
 						cart.setcartDate(rs.getDate("cart_date"));
 						cart.setmemberId(rs.getString("member_id"));
-						cart.setproductNo(rs.getInt("product_no"));
+						cart.setGoods_no(rs.getInt("goods_no"));
 						return cart;
 					}
 			
@@ -91,7 +91,7 @@ public class CartDao {
 	}
 	
 	public List<Cart> selectByid(String memid){
-		String sql = "select * from Carts where member_id=?";
+		String sql = "select * from carts where member_id=?";
 		List<Cart> list = jdbcTemplate.query(sql
 						,new Object[]{memid},
 						new RowMapper<Cart>(){
@@ -102,7 +102,7 @@ public class CartDao {
 				cart.setcartAmount(rs.getInt("cart_amount"));
 				cart.setcartDate(rs.getDate("cart_date"));
 				cart.setmemberId(rs.getString("member_id"));
-				cart.setproductNo(rs.getInt("product_no"));
+				cart.setGoods_no(rs.getInt("goods_no"));
 				return cart;
 			}
 			
@@ -115,19 +115,10 @@ public class CartDao {
 	
 	public List<Cart> selectByPage(int pageNo, int rowsPerPage){
 		String sql = "";
-		sql += "select rn, cart_no, cart_amount, cart_date, product_no, member_id ";
-		sql += "from ";
-		sql += "( ";
-		sql += "select rownum rn, cart_no, cart_amount, cart_date, product_no, member_id ";
-		sql += "from ";
-		sql += "( ";
-		sql += "select cart_no, cart_amount, cart_date, product_no, member_id " ;
-		sql += "from Carts ";
+		sql += " select cart_no, cart_amount, cart_date, goods_no, member_id  ";
+		sql += "from carts ";
 		sql += "order by cart_no desc ";
-		sql += ") ";
-		sql += "where rownum<=? ";
-		sql += ") ";
-		sql += "where rn>=? ";	
+		sql += "limit ?,?";
 		List<Cart> list = jdbcTemplate.query(
 				sql,
 				new Object[]{(pageNo-1)*rowsPerPage, rowsPerPage},
@@ -141,7 +132,7 @@ public class CartDao {
 						cart.setcartAmount(rs.getInt("cart_amount"));
 						cart.setcartDate(rs.getDate("cart_date"));
 						cart.setmemberId(rs.getString("member_id"));
-						cart.setproductNo(rs.getInt("product_no"));
+						cart.setGoods_no(rs.getInt("goods_no"));
 						return cart;
 					}
 					
@@ -150,13 +141,8 @@ public class CartDao {
 		return list;
 	}
 
-	public void deleteByMemberId(String memberId) throws SQLException{
-		String sql = "delete from Carts where member_id=?";
-		int rows = jdbcTemplate.update(
-				sql,
-				memberId
-			);
-	}
+	
+
 }
 
 
