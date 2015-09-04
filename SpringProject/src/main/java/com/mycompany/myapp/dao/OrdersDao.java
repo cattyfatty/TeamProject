@@ -7,129 +7,132 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+
 import com.mycompany.myapp.dto.Orders;
 
+@Component
 public class OrdersDao {
 
-	private Connection conn;
-	public OrdersDao(Connection conn){
-		this.conn = conn;
-	}
-
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	public Integer insert(Orders orders) throws SQLException {
 		Integer pk = null;
-		String sql = "insert into orders ( order_price,member_id) values (?,?)";
+		String sql = "insert into orders (order_price, member_id) values (?,?)";
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator(){
+		@Override
+		public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"order_no"});
-
-
 		pstmt.setInt(1, orders.getOrderPrice());
 		pstmt.setString(2, orders.getMemberid());
-		int row = pstmt.executeUpdate();
-		if(row==1){
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next()){
-				pk = rs.getInt(1);
-			}
-			rs.close();
+		return pstmt;
 		}
-		pstmt.close();
+	}, keyHolder);
+		Number keyNumber = keyHolder.getKey();
+		//getKey()로 orderNo를 얻을 수 있음
+		pk = keyNumber.intValue();
 		return pk;
 
 	}
 
-	public int delete(int orderNo) throws SQLException{
-		int rows = 0;
-		String sql = "delete from orderss where orders_no=?";
 
-
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1,orderNo);
-		rows = pstmt.executeUpdate();//������ insert�� ���� ��. insert���� update, delete � ����.
-
-		System.out.println("�ֹ���ȣ"+ orderNo +"���� ������");
-
+	public int delete(int orderNo) {
+		String sql = 
+		"delete from orders where orders_no=?";
+		int rows=jdbcTemplate.update(
+				sql,
+				orderNo
+			);
 		return rows;
 	}
+	
 
+	public List<Orders> selectByPage(int pageNo, int rowsPerPage) {
 
-	public List<Orders> selectByPage(int pageNo,int rowsPerPage) throws SQLException{
-		List<Orders> list = new ArrayList<Orders>();
 		String sql="";
-		sql += "select rn, order_no, order_date, order_arrival, order_price, member_id ";
+		sql += "select order_no, order_date, order_arrival, order_price, member_id ";
 		sql += " from ";
-		sql += " ( ";
-		sql += " select rownum rn, order_no, order_date, order_arrival, order_price, member_id ";
-		sql += " from ";
-		sql += " ( ";
-		sql += " select order_no, order_date, order_arrival, order_price, member_id " ;
-		sql += " from orders ";
 		sql += " order by order_no desc ";
-		sql += " ) ";
-		sql += " where rownum<=? ";
-		sql += " ) ";
-		sql += " where rn>=? ";	
+		sql +="limit ?,?";
+	
 
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, pageNo*rowsPerPage);
-		pstmt.setInt(2, (pageNo-1)*rowsPerPage+1);
+		List<Orders> list = jdbcTemplate.query(
+				sql, 
+				new Object[] { (pageNo-1)*rowsPerPage, rowsPerPage },
+				new RowMapper<Orders>(){
 
-		ResultSet rs = pstmt.executeQuery();//select�� executeQuery!
-
-		while(rs.next()){
-
+			@Override
+			public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Orders orders= new Orders();
 			orders.setOrderNo(rs.getInt("order_no"));
 			orders.setOrderPrice(rs.getInt("order_price"));
 			orders.setMemberid(rs.getString("member_id"));
-			list.add(orders);
-		}
+			return orders;
+				}
 
-		rs.close();
-
-		pstmt.close();
+			}
+				
+		);
 		return list;
 
 	}
 
 
-	public Orders selectByPk(int orderNo) throws SQLException {
-		Orders orders = null;
+	public Orders selectByPk(int orderNo) {
+		
 		String sql = "select * from orders where order_no=?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1,  orderNo);
-		ResultSet rs = pstmt.executeQuery();
-		if(rs.next()) {
-			orders = new Orders();
+		Orders orders = jdbcTemplate.queryForObject(
+				sql,
+				new Object[] {orderNo},
+				new RowMapper<Orders>() {
+
+			@Override
+			public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Orders orders = new Orders();
 			orders.setMemberid(rs.getString("member_id"));
 			orders.setOrderNo(rs.getInt("order_no"));
 			orders.setOrderPrice(rs.getInt("order_price"));
-
+			return orders;
+			}
 		}
-		rs.close();
-		pstmt.close();
-		return orders;
+				
+	);
+			return orders;
 	}
 
 
-	public List<Orders> selectByMemberId(String memberId) throws SQLException {
-		List<Orders> list = new ArrayList<Orders>();
+	public List<Orders> selectByMemberId(String memberId){
+		
 		String sql = "select * from orders where member_id=?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1,  memberId);
-		ResultSet rs = pstmt.executeQuery();
-		while(rs.next()){
+		
+		List<Orders> list = jdbcTemplate.query(
+				sql,
+				new Object[] {memberId},
+				new RowMapper<Orders>() {
 
+			@Override
+			public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Orders orders= new Orders();
 			orders.setOrderNo(rs.getInt("order_no"));
 			orders.setOrderPrice(rs.getInt("order_price"));
 			orders.setMemberid(rs.getString("member_id"));
-			list.add(orders);
-		}
-		rs.close();
-		pstmt.close();
+			return orders;
+				}
+		
+			}
+
+		);
 		return list;
 	}
-
 
 }
 
