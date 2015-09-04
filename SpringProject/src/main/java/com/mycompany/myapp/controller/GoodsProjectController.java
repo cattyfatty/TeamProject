@@ -16,10 +16,16 @@ public class GoodsProjectController {
 		return "project/home";
 	}
 	
+	@RequestMapping("/project/loginForm")
+	public String projectLoginForm() {
+		logger.info("project-login()");
+		return "project/loginForm";
+	}
+	
 	@RequestMapping("/project/login")
 	public String projectLogin() {
 		logger.info("project-login()");
-		return "project/login";
+		return "redirect:/project/home";
 	}
 	
 	@RequestMapping("/project/joinForm")
@@ -31,6 +37,14 @@ public class GoodsProjectController {
 	@RequestMapping("/project/join")
 	public String projectJoin() {
 		logger.info("project-join");
-		return "project/join";
+		return "redirect:/project/home";
 	}
+	
+	@RequestMapping("/project/productList")
+	public String projectProductList() {
+		logger.info("project-productList");
+		return "project/productList";
+	}
+	
+	
 }
