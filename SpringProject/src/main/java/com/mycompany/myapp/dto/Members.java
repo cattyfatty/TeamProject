@@ -7,9 +7,8 @@ public class Members {
 	private String address;
 	private String tel;
 	private String email;
-	private int point;
-	private String level;
 	private int ordercount;
+	
 	public String getId() {
 		return id;
 	}
@@ -46,18 +45,7 @@ public class Members {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPoint() {
-		return point;
-	}
-	public void setPoint(int point) {
-		this.point = point;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
+	
 	public int getOrdercount() {
 		return ordercount;
 	}
