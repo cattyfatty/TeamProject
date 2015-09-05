@@ -19,11 +19,11 @@ public class MemberDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public String insert(Members member){
-		String pk = null;
+	public void insert(Members member){
+		
 		String sql = "insert into members"
-				+ "(member_id, member_password, member_name, member_address, member_tel, member_email, member_ordercount)"
-				+ "values(?,?,?,?,?,?,?)";
+				+ "(member_id, member_password, member_name, member_address, member_tel, member_email)"
+				+ "values(?,?,?,?,?,?)";
 		
 		jdbcTemplate.update(new PreparedStatementCreator() {
 		
@@ -36,17 +36,15 @@ public class MemberDao {
 			pstmt.setString(4, member.getAddress());
 			pstmt.setString(5, member.getTel());
 			pstmt.setString(6, member.getEmail());
-			pstmt.setInt(9, member.getOrdercount());
 			return pstmt;
 			}
 		});
-		return pk; 
 	}
 	
 	public int update(Members member) throws SQLException{
-		String sql = "update members set member_password=?, member_tel=? member_email=?, member_ordercount where member_id=?";
+		String sql = "update members set member_password=?, member_tel=? member_email=? where member_id=?";
 			
-	int rows = jdbcTemplate.update(sql, member.getPassword(), member.getTel(), member.getEmail(), member.getOrdercount(), member.getId());
+	int rows = jdbcTemplate.update(sql, member.getPassword(), member.getTel(), member.getEmail(), member.getId());
 		
 		return rows;
 	}
@@ -73,7 +71,6 @@ public class MemberDao {
 					member.setAddress(rs.getString("member_address"));
 					member.setTel(rs.getString("member_tel"));
 					member.setEmail(rs.getString("member_email"));
-					member.setOrdercount(rs.getInt("member_ordercount"));
 					return member;	
 					
 				}
