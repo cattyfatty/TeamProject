@@ -96,7 +96,7 @@ public class GoodsService {
 		return list;
 	}
 	
-	public Goods showGoodsDetail(int goodsNo) {
+	public Goods getGoods(int goodsNo) {
 		Goods goods = goodsDao.selectByPk(goodsNo);
 		
 		return goods;
@@ -115,6 +115,8 @@ public class GoodsService {
 		
 		return list;
 	}
+	
+	
 
 	// -----------------------------------------------------------------------------------------
 }

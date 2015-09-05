@@ -1,4 +1,4 @@
-package com.mycompany.myapp.controller;
+  package com.mycompany.myapp.controller;
 
 import java.util.List;
 
@@ -94,13 +94,13 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/goodsDetail")
 
-	public String projectProductdetail(int boardNo, Model model) {
+	public String projectProductdetail(int goodsNo, Model model) {
 		logger.info("detail()");
 		
-		Goods goods = goo.getBoard(boardNo);
-		model.addAttribute("board", board);
-		
+		Goods goods =goodservice.getGoods(goodsNo);
+		model.addAttribute("goods", goods);
 		return "project/goodsDetail";
+		
 	}
 	
 }
