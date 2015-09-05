@@ -140,7 +140,8 @@ public class GoodsProjectController {
 		model.addAttribute("orderlist", orderlist); 
 		
 		return "project/orderList";
-	
+
+	//
 	}
 	
 	@RequestMapping("/project/orderdetail")
