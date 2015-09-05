@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.myapp.dto.Board;
+import com.mycompany.myapp.dto.Cart;
 import com.mycompany.myapp.dto.Goods;
 import com.mycompany.myapp.dto.Orders;
 import com.mycompany.myapp.service.GoodsService;
@@ -30,7 +30,7 @@ public class GoodsProjectController {
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "project/home";//uhiuihihguygugyugyuvvvv
+		return "project/home";
 	}
 	
 	@RequestMapping("/project/loginForm")
@@ -141,6 +141,19 @@ public class GoodsProjectController {
 		
 		return "project/orderList";
 		
+	}
+	
+	
+	
+	@RequestMapping("/project/addCart")
+	public String addCart(int amount,Goods goods,HttpSession session){
+		Cart cart = new Cart();
+		cart.setcartAmount(amount);
+		cart.setGoods_no(goods.getNo());
+		//cart.setmemberId(session.getAttribute("loginId"));
+		goodservice.addCart(cart);
+		
+		return "redirect:/project/goodList";
 	}
 	
 	@RequestMapping("/project/orderdetail")
