@@ -109,6 +109,7 @@ public class GoodsProjectController {
 	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		session.setAttribute("pageNo", pageNo);
+
 		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
@@ -129,7 +130,7 @@ public class GoodsProjectController {
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		/*List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
+		List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -137,10 +138,11 @@ public class GoodsProjectController {
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("orderlist", orderlist); */
+		model.addAttribute("orderlist", orderlist); 
 		
 		return "project/orderList";
-		
+
+	//
 	}
 	
 	
