@@ -12,8 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.myapp.dto.Cart;
+import com.mycompany.myapp.dto.Board;
 import com.mycompany.myapp.dto.Goods;
+import com.mycompany.myapp.dto.Orders;
 import com.mycompany.myapp.service.GoodsService;
 
 @Controller
@@ -22,14 +23,14 @@ public class GoodsProjectController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsProjectController.class);
 
 	@Autowired
-	private GoodsService goodsService;
+	private GoodsService goodservice;
 	
 	
 	
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "project/home";
+		return "project/home";//uhiuihihguygugyugyuvvvv
 	}
 	
 	@RequestMapping("/project/loginForm")
@@ -57,7 +58,7 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/goodsList")
-	public String projectGoodsList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
+	public String projectProductList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
 		logger.info("project-productList");
 		session.setAttribute("pageNo", pageNo);
 		
@@ -65,7 +66,7 @@ public class GoodsProjectController {
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		int totalBoardNo = goodsService.getTotalBoardNo();
+		int totalBoardNo = goodservice.getTotalBoardNo();
 		
 		int totalPageNo = totalBoardNo / rowsPerPage;
 		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
@@ -79,7 +80,7 @@ public class GoodsProjectController {
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
 		
-	List<Goods> goodslist = goodsService.getPage(pageNo, rowsPerPage);
+	List<Goods> goodslist = goodservice.getPage(pageNo, rowsPerPage);
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -94,43 +95,28 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/goodsDetail")
 
-	public String projectGoodsdetail(int goodsNo, Model model) {
+	public String projectProductdetail(int goodsNo, Model model) {
 		logger.info("detail()");
 		
-		Goods goods =goodsService.getGoods(goodsNo);
+		Goods goods =goodservice.getGoods(goodsNo);
 		model.addAttribute("goods", goods);
 		return "project/goodsDetail";
 		
 	}
-
 	
-	@RequestMapping("/project/addCart")
-	public String addCart(Goods goods,int amount,HttpSession session){
-		logger.info("addCart()");
+	@RequestMapping("/project/orderList")
+	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
-
-
-		Cart  cart = new Cart();
-		cart.setcartAmount(amount);
-		cart.setGoods_no(goods.getNo());
-		//cart.setmemberId(session.getAttribute("loginId"));   
-		
-		if(cart!=null){
-			goodsService.addCart(cart);	
-		}
-		
-		return "redirect:/project/goodsList";
-	}
-	@RequestMapping("/project/cartList")
-	public String projectShowCart(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
-		logger.info("project-cartList");
 		session.setAttribute("pageNo", pageNo);
 		
+		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
-		int rowsPerPage = 5;
-		int pagesPerGroup = 3;
+		model.addAttribute("orderlist", orderlist);
 		
-		int totalBoardNo = goodsService.getTotalBoardNo();
+		int rowsPerPage = 10;
+		int pagesPerGroup = 5;
+		
+		int totalBoardNo = goodservice.getTotalBoardNo();
 		
 		int totalPageNo = totalBoardNo / rowsPerPage;
 		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
@@ -143,8 +129,7 @@ public class GoodsProjectController {
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		
-		List<Cart> cartlist = goodsService.getCartPage(pageNo, rowsPerPage);
+		/*List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -152,11 +137,23 @@ public class GoodsProjectController {
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("cartlist", cartlist);
+		model.addAttribute("orderlist", orderlist); */
 		
-		return "project/cartList";
+		return "project/orderList";
+		
 	}
 	
-	
+	@RequestMapping("/project/orderdetail")
+
+	public String orderdetail(String memberId, Model model) {
+		
+		List<Orders> list = goodservice.showOrders(memberId);
+		
+		
+		model.addAttribute("list", list);
+		
+		return "project/orderList";
+		
+	}
 	
 }
