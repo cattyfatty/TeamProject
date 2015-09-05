@@ -114,7 +114,6 @@ public class GoodsProjectController {
 		cart.setcartAmount(amount);
 		cart.setGoods_no(goods.getNo());
 		//cart.setmemberId(session.getAttribute("loginId"));
->>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 		
 		if(cart!=null){
 			goodsService.addCart(cart);	
