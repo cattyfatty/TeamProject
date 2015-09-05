@@ -110,6 +110,7 @@ public class GoodsProjectController {
 		Cart  cart = new Cart();
 		
 		
+		
 		return "redirect:/project/goodsList";
 	}
 	
