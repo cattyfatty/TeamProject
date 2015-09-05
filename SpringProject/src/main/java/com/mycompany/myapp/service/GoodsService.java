@@ -31,7 +31,7 @@ public class GoodsService {
 	private MemberDao memberDao;
 
 	// -----------------------------------------------------------------------------------------
-	// Members °ü·Ã ¼­ºñ½º
+	// Members ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void joinMember(Members member) {
 		memberDao.insert(member);
 	}
@@ -46,7 +46,7 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Cart °ü·Ã ¼­ºñ½º
+	// Cart ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void addCart(Cart cart) {
 		cartDao.insert(cart);
 	}
@@ -60,10 +60,16 @@ public class GoodsService {
 	public void deleteCart(String memberId) {
 		cartDao.delete(memberId);
 	}
+	public List<Cart> getCartPage(int pageNo, int rowsPerPage) {
+		
+		List<Cart> list = cartDao.selectByPage(pageNo, rowsPerPage);
+		
+		return list;
+	}
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// OrderItems °ü·Ã ¼­ºñ½º
+	// OrderItems ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void addOrderItems(OrderItems orderItmes) {
 		orderItemsDao.insert(orderItmes);
 	}
@@ -76,7 +82,7 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Orders °ü·Ã ¼­ºñ½º
+	// Orders ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void addOrder(Orders orders) {
 		ordersDao.insert(orders);
 	}
@@ -89,7 +95,7 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Goods °ü·Ã ¼­ºñ½º
+	// Goods ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public List<Goods> showGoods(int pageNo, int rowsPerPage) {
 		List<Goods> list = goodsDao.selectByPage(pageNo, rowsPerPage);
 		
