@@ -109,7 +109,7 @@ public class GoodsProjectController {
 		
 		session.setAttribute("pageNo", pageNo);
 
-		//SP..dfdfdfd
+		//SP..dfdfdfd.DAFADFAFADFAF
 		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
