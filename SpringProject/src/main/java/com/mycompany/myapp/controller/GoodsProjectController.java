@@ -89,7 +89,7 @@ public class GoodsProjectController {
 		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("list", goodslist);
 		
-		return "project/goodsList";         
+		return "project/goodsList";                                    
 	}
 	
 	@RequestMapping("/project/goodsDetail")
