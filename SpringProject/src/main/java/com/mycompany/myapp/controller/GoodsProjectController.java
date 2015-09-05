@@ -30,7 +30,7 @@ public class GoodsProjectController {
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "project/home";//uhiuihihguygugyugyuvvvv
+		return "project/home";
 	}
 	
 	@RequestMapping("/project/loginForm")
