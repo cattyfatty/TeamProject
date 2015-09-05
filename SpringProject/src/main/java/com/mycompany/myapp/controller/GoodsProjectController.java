@@ -130,7 +130,7 @@ public class GoodsProjectController {
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		/*List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
+		List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -138,7 +138,7 @@ public class GoodsProjectController {
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("orderlist", orderlist); */
+		model.addAttribute("orderlist", orderlist); 
 		
 		return "project/orderList";
 		
