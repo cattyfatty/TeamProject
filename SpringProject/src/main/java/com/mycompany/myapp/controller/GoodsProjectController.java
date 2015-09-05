@@ -108,7 +108,10 @@ public class GoodsProjectController {
 	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		session.setAttribute("pageNo", pageNo);
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
