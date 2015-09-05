@@ -113,7 +113,7 @@ public class GoodsProjectController {
 		Cart  cart = new Cart();
 		cart.setcartAmount(amount);
 		cart.setGoods_no(goods.getNo());
-		//cart.setmemberId(session.getAttribute("loginId"));
+		//cart.setmemberId(session.getAttribute("loginId"));   
 		
 		if(cart!=null){
 			goodsService.addCart(cart);	
