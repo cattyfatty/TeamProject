@@ -102,6 +102,7 @@ public class GoodsProjectController {
 		return "project/goodsDetail";
 		
 	}
+
 	
 	@RequestMapping("/project/addCart")
 	public String addCart(Goods goods,int amount,HttpSession session){
