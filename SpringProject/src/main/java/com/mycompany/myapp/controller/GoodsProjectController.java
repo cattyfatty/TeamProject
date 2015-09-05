@@ -140,7 +140,7 @@ public class GoodsProjectController {
 		model.addAttribute("orderlist", orderlist); 
 		
 		return "project/orderList";
-		//sdlkjflsd
+	
 	}
 	
 	@RequestMapping("/project/orderdetail")
@@ -155,5 +155,5 @@ public class GoodsProjectController {
 		return "project/orderList";
 		
 	}
-	//dddd
+	
 }
