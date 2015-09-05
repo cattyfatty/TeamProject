@@ -27,7 +27,7 @@ public class CartDao {
 	
 	public Integer insert(Cart cart){
 		Integer pk = null;
-		String sql = "insert into carts (cart_amount, member_id, goods_no) values (?, ?, ?)";
+		String sql = "insert into carts (cart_amount, member_id, goods_no,cart_date) values (?, ?, ?,now())";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			

@@ -104,11 +104,13 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/addCart")
-	public String addCart(Goods goods){
+	public String addCart(Goods goods,int amount){
 		logger.info("addCart()");
 		
 		Cart  cart = new Cart();
-		
+		cart.setcartAmount(amount);
+		cart.setGoods_no(goods.getNo());
+		cart.set
 		
 		
 		return "redirect:/project/goodsList";
