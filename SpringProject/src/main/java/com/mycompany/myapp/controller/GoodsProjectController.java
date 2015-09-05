@@ -108,13 +108,6 @@ public class GoodsProjectController {
 	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		session.setAttribute("pageNo", pageNo);
-
-
-		//SP..dfdfdfddfdfdfdfd
-
-
-
-
 		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
