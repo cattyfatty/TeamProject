@@ -138,7 +138,7 @@ public class GoodsProjectController {
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("orderlist", orderlist);*/
+		model.addAttribute("orderlist", orderlist); */
 		
 		return "project/orderList";
 		
