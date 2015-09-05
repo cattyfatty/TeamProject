@@ -1,4 +1,4 @@
-package com.mycompany.myapp.controller;
+  package com.mycompany.myapp.controller;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mycompany.myapp.dto.Board;
 import com.mycompany.myapp.dto.Goods;
+import com.mycompany.myapp.dto.Orders;
 import com.mycompany.myapp.service.GoodsService;
 
 @Controller
@@ -29,7 +30,7 @@ public class GoodsProjectController {
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "project/home";
+		return "project/home";//uhiuihihguygugyugyuvvvv
 	}
 	
 	@RequestMapping("/project/loginForm")
@@ -94,13 +95,65 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/goodsDetail")
 
-	public String projectProductdetail(int boardNo, Model model) {
+	public String projectProductdetail(int goodsNo, Model model) {
 		logger.info("detail()");
 		
-		Goods goods = goo.getBoard(boardNo);
-		model.addAttribute("board", board);
-		
+		Goods goods =goodservice.getGoods(goodsNo);
+		model.addAttribute("goods", goods);
 		return "project/goodsDetail";
+		
+	}
+	
+	@RequestMapping("/project/orderList")
+	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
+		
+		session.setAttribute("pageNo", pageNo);
+		
+		List<Orders> orderlist = goodservice.showOrders(memberId);
+		
+		model.addAttribute("orderlist", orderlist);
+		
+		int rowsPerPage = 10;
+		int pagesPerGroup = 5;
+		
+		int totalBoardNo = goodservice.getTotalBoardNo();
+		
+		int totalPageNo = totalBoardNo / rowsPerPage;
+		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
+		
+		int totalGroupNo = totalPageNo / pagesPerGroup;
+		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
+		
+		int groupNo = (pageNo - 1) / pagesPerGroup + 1;
+		int startPageNo = (groupNo - 1) * pagesPerGroup + 1;
+		int endPageNo = startPageNo + pagesPerGroup - 1;
+		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
+		
+		/*List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
+		
+		model.addAttribute("pagesPerGroup", pagesPerGroup);
+		model.addAttribute("totalPageNo", totalPageNo);
+		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("orderlist", orderlist); */
+		
+		return "project/orderList";
+		
+	}
+	
+	@RequestMapping("/project/orderdetail")
+
+	public String orderdetail(String memberId, Model model) {
+		
+		List<Orders> list = goodservice.showOrders(memberId);
+		
+		
+		model.addAttribute("list", list);
+		
+		return "project/orderList";
+		
 	}
 	
 }

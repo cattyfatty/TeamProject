@@ -69,23 +69,32 @@
 		<div id="part1">
 			<div id="part1_1">
 				<span class="title">상품번호:</span> 
-				<span class="content">${board.no }</span> <br/>
+				<span class="content">${goods.no}</span> <br/>
 				<span class="title">상품명:</span> 
-				<span class="content">${board.title }</span> <br/>
+				<span class="content">${goods.name}</span> <br/>
 				<span class="title">가격:</span> 
-				<span class="content">${board.writer }</span> <br/>
+				<span class="content">${goods.price}</span> <br/>
 				<span class="title">상품종류:</span> 
-				<span class="content">${board.date }</span> <br/>
+				<span class="content">${goods.kind}</span> <br/>
 				<span class="title">칼로리:</span> 
-				<span class="content">${board.hitcount }</span> <br/>
+				<span class="content">${goods.calory}</span> <br/>
 				<span class="title">size:</span> 
-				<span class="content">${board.hitcount }</span> <br/>
+				<span class="content">${goods.size}</span> <br/>
 				<span class="title">사은품:</span>
-				<span class="content">${board.originalFileName }</span> <br/>
+				<span class="content">${goods.gift}</span> <br/>
 			</div>
 		</div>
+		
+		<div id="part2">
+			<div id="part2_1">
+				<span class="title">주문수량</span>
+				<input type="text" name="amount"/>
+			</div>
+		</div>
+		
 		<div id="buttonGroup">
 			<a href="goodsList?pageNo=${pageNo}">목록</a>
+			<a href="addCart?">장바구니에 넣기</a>
 		</div>		
 	</body>
 </html>
