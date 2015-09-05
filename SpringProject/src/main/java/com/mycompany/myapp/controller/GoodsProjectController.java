@@ -107,11 +107,48 @@ public class GoodsProjectController {
 	public String addCart(Goods goods){
 		logger.info("addCart()");
 		
-		Cart  cart = new Cart();
+		Cart cart = new Cart();
 		
 		
 		
 		return "redirect:/project/goodsList";
 	}
+	@RequestMapping("/project/cartList")
+	public String projectShowCart(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
+		logger.info("project-cartList");
+		session.setAttribute("pageNo", pageNo);
+		
+		
+		int rowsPerPage = 5;
+		int pagesPerGroup = 3;
+		
+		int totalBoardNo = goodsService.getTotalBoardNo();
+		
+		int totalPageNo = totalBoardNo / rowsPerPage;
+		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
+		
+		int totalGroupNo = totalPageNo / pagesPerGroup;
+		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
+		
+		int groupNo = (pageNo - 1) / pagesPerGroup + 1;
+		int startPageNo = (groupNo - 1) * pagesPerGroup + 1;
+		int endPageNo = startPageNo + pagesPerGroup - 1;
+		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
+		
+		
+		List<Cart> cartlist = goodsService.getCartPage(pageNo, rowsPerPage);
+		
+		model.addAttribute("pagesPerGroup", pagesPerGroup);
+		model.addAttribute("totalPageNo", totalPageNo);
+		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("cartlist", cartlist);
+		
+		return "project/cartList";
+	}
+	
+	
 	
 }
