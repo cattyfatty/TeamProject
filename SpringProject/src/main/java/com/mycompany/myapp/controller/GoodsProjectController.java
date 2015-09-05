@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.myapp.dto.Board;
+import com.mycompany.myapp.dto.Cart;
 import com.mycompany.myapp.dto.Goods;
 import com.mycompany.myapp.service.GoodsService;
 
@@ -22,7 +22,7 @@ public class GoodsProjectController {
 	private static final Logger logger = LoggerFactory.getLogger(GoodsProjectController.class);
 
 	@Autowired
-	private GoodsService goodservice;
+	private GoodsService goodsService;
 	
 	
 	
@@ -57,7 +57,7 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/goodsList")
-	public String projectProductList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
+	public String projectGoodsList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
 		logger.info("project-productList");
 		session.setAttribute("pageNo", pageNo);
 		
@@ -65,7 +65,7 @@ public class GoodsProjectController {
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		int totalBoardNo = goodservice.getTotalBoardNo();
+		int totalBoardNo = goodsService.getTotalBoardNo();
 		
 		int totalPageNo = totalBoardNo / rowsPerPage;
 		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
@@ -79,7 +79,7 @@ public class GoodsProjectController {
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
 		
-	List<Goods> goodslist = goodservice.getPage(pageNo, rowsPerPage);
+	List<Goods> goodslist = goodsService.getPage(pageNo, rowsPerPage);
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -94,13 +94,23 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/goodsDetail")
 
-	public String projectProductdetail(int goodsNo, Model model) {
+	public String projectGoodsdetail(int goodsNo, Model model) {
 		logger.info("detail()");
 		
-		Goods goods =goodservice.getGoods(goodsNo);
+		Goods goods =goodsService.getGoods(goodsNo);
 		model.addAttribute("goods", goods);
 		return "project/goodsDetail";
 		
+	}
+	
+	@RequestMapping("/project/addCart")
+	public String addCart(Goods goods){
+		logger.info("addCart()");
+		
+		Cart  cart = new Cart();
+		
+		
+		return "redirect:/project/goodsList";
 	}
 	
 }
