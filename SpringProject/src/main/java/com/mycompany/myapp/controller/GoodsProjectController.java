@@ -108,9 +108,8 @@ public class GoodsProjectController {
 	public String addCart(Goods goods,int amount,HttpSession session){
 		logger.info("addCart()");
 		
-<<<<<<< HEAD
-		Cart cart = new Cart();
-=======
+
+
 		Cart  cart = new Cart();
 		cart.setcartAmount(amount);
 		cart.setGoods_no(goods.getNo());
