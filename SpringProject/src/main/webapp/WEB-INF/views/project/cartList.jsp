@@ -8,6 +8,79 @@
 	<meta charset="UTF-8">
 	
 	<title>Insert title here</title>
+	<style type="text/css">
+		body{
+			background-color: black;
+			color: white;
+			
+		
+		}
+		h1{
+			text-align: center;
+		}
+		table{
+			width: 100%;
+		
+		}
+		table, th, td{
+			border-collapse: collapse;
+			border-style: double;
+			text-align: center;
+		}
+		th{
+			padding:10px;
+			background-color: #B1B1B1;
+			font-size:120%;
+			
+			
+		}
+		#buttonGroup{
+			margin-top: 20px;
+			text-align: center;
+		}
+		#buttonGroup a{
+			text-decoration: none;
+			display: inline-block;
+			padding:7px;
+			line-height: 30px;
+			font-size: 110%;
+			color:white;
+			background-color: #8D8D8D;
+			border: 1px solid white;
+			
+			
+		}
+		#buttonGroup a:hover{
+			color:black;
+			background-color:white;
+		}
+		#pager {
+			margin-top:5px;
+			text-align: center;
+		}
+		
+		#pager a {
+			text-decoration: none;
+			color:white;
+		}
+		
+		#pager a:hover {
+			color: darkgray;
+			
+		}
+		
+		#pager a.pageNo {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+		
+		#pager a.pageNo.selected {
+			color: darkgary;
+		}
+		
+		
+	
+	</style>
 
 	</head>
 	<body>
