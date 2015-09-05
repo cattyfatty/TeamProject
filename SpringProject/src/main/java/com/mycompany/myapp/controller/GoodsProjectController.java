@@ -90,7 +90,7 @@ public class GoodsProjectController {
 		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("list", goodslist);
 		
-		return "project/goodsList";
+		return "project/goodsList";                                    
 	}
 	
 	@RequestMapping("/project/goodsDetail")
@@ -108,7 +108,6 @@ public class GoodsProjectController {
 	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		session.setAttribute("pageNo", pageNo);
-		
 		List<Orders> orderlist = goodservice.showOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
