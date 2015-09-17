@@ -80,52 +80,44 @@
 		
 		<table>
 			<tr>
-				<th style="width:50px">번호</th>
-				<th>제목</th>
-				<th style="width:60px">글쓴이</th>
-				<th style="width:80px">날짜</th>
-				<th style="width:60px">조회수</th>
+				<th style="width:50px">상품번호</th>
+				<th>상품명</th>
+				<th style="width:60px">가격</th>
+				<th style="width:80px">종류</th>
+				<th style="width:60px">칼로리</th>
 			</tr>
 			
-			<c:forEach var="board" items="${list}">
+			<c:forEach var="goods" items="${goodslist}">
 				<tr>
-					<td>${board.no}</td>
-					<td><a href="detail?boardNo=${board.no}">${board.title}</a></td>
-					<td>${board.writer}</td>
-					<td>${board.date}</td>
-					<td>${board.hitcount}</td>
+					<td>${goods.no}</td>
+					<td><a href="goodsDetail?goodsNo=${goods.no}">${goods.name}</a></td>
+					<td>${goods.price}</td>
+					<td>${goods.kind}</td>
+					<td>${goods.calory}</td>
 				</tr>
 			</c:forEach>
 			
 		</table>
 		
 		<div id="pager">
-			<a href="list?pageNo=1">[처음]</a>
+			<a href="goodsList?pageNo=1">[처음]</a>
 			
 			<c:if test="${groupNo > 1 }">
-				<a href="list?pageNo=${startPageNo - pagesPerGroup }">[이전]</a>
+				<a href="goodsList?pageNo=${startPageNo - pagesPerGroup }">[이전]</a>
 			</c:if>
 			<c:forEach var="i" begin="${startPageNo }" end="${endPageNo }">
-				<%-- <c:if test="${pageNo == i }">
-					<a class="pageNo selected" href="list?pageNo=${i}">${i}</a>
-				</c:if>
-				<c:if test="${pageNo != i }">
-					<a class="pageNo" href="list?pageNo=${i}">${i}</a>
-				</c:if> --%>
-				<a class='pageNo <c:if test="${pageNo == i }">selected</c:if>' href="list?pageNo=${i}">${i}</a>
+			
+				<a class='pageNo <c:if test="${pageNo == i }">selected</c:if>' href="goodsList?pageNo=${i}">${i}</a>
 			</c:forEach>
 			
 			<c:if test="${groupNo < totalGroupNo }">
-				<a href="list?pageNo=${endPageNo + 1}">[다음]</a>
+				<a href="goodsList?pageNo=${endPageNo + 1}">[다음]</a>
 			</c:if>			
 
-
-			<a href="list?pageNo=${totalPageNo}">[맨끝]</a>
+			<a href="goodsList?pageNo=${totalPageNo}">[맨끝]</a>
 		</div>
 		
-		<div id="buttonGroup">
-			<a href="writeForm">글쓰기</a>
-		</div>
+		
 	</body>
 </html>
 

@@ -8,7 +8,7 @@ public class Cart {
 	private int cart_amount;
 	private Date cart_date;
 	private String member_id;
-	private int product_no;
+	private int goods_no;
 
 	public int getcartNo() {
 		return cart_no;
@@ -34,11 +34,11 @@ public class Cart {
 	public void setmemberId(String member_id) {
 		this.member_id = member_id;
 	}
-	public int getproductNo() {
-		return product_no;
+	public int getGoods_no() {
+		return goods_no;
 	}
-	public void setproductNo(int product_no) {
-		this.product_no = product_no;
+	public void setGoods_no(int goods_no) {
+		this.goods_no = goods_no;
 	}
 
 

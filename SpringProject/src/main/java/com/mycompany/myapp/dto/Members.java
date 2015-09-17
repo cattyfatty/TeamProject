@@ -7,8 +7,7 @@ public class Members {
 	private String address;
 	private String tel;
 	private String email;
-	private int ordercount;
-	
+		
 	public String getId() {
 		return id;
 	}
@@ -46,13 +45,4 @@ public class Members {
 		this.email = email;
 	}
 	
-	public int getOrdercount() {
-		return ordercount;
-	}
-	public void setOrdercount(int ordercount) {
-		this.ordercount = ordercount;
-	}
-	
-	
-
 }

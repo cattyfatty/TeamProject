@@ -1,11 +1,15 @@
 package com.mycompany.myapp.dto;
 
+import java.util.Date;
+
 public class CartInfo {
 	int product_no;
 	String product_name;
 	int amount;
 	int totalPrice = 0;
 	int price;
+
+
 	public String getMemid() {
 		return memid;
 	}

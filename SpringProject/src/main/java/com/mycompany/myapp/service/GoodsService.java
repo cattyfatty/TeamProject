@@ -47,11 +47,15 @@ public class GoodsService {
 
 	// -----------------------------------------------------------------------------------------
 	// Cart ���� ����
+<<<<<<< HEAD
 	public void addCart(String memberId, int amount, int productNo) {
 		Cart cart = new Cart();
 		cart.setmemberId(memberId);
 		cart.setcartAmount(amount);
 		cart.setproductNo(productNo);
+=======
+	public void addCart(Cart cart) {
+>>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 		cartDao.insert(cart);
 	}
 	
@@ -64,9 +68,16 @@ public class GoodsService {
 	public void deleteCart(String memberId) {
 		cartDao.delete(memberId);
 	}
+	public List<Cart> getCartPage(int pageNo, int rowsPerPage) {
+		
+		List<Cart> list = cartDao.selectByPage(pageNo, rowsPerPage);
+		
+		return list;
+	}
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
+<<<<<<< HEAD
 	// 주문관련
 	public void order(String memberId) {
 		List<Cart> cartList = getCart(memberId);
@@ -79,6 +90,8 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 	
 	// -----------------------------------------------------------------------------------------
+=======
+>>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 	// OrderItems ���� ����
 	public void addOrderItems(OrderItems orderItmes) {
 		orderItemsDao.insert(orderItmes);
@@ -106,17 +119,41 @@ public class GoodsService {
 
 	// -----------------------------------------------------------------------------------------
 	// Goods ���� ����
+<<<<<<< HEAD
 	public List<Goods> getGoods(int pageNo, int rowsPerPage) {
+=======
+	public List<Goods> showGoods(int pageNo, int rowsPerPage) {
+>>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 		List<Goods> list = goodsDao.selectByPage(pageNo, rowsPerPage);
 		
 		return list;
 	}
 	
+<<<<<<< HEAD
 	public Goods getGoodsDetail(int goodsNo) {
+=======
+	public Goods getGoods(int goodsNo) {
+>>>>>>> branch 'master' of https://github.com/cattyfatty/TeamProject.git
 		Goods goods = goodsDao.selectByPk(goodsNo);
 		
 		return goods;
 	}
+
+	public int getTotalBoardNo() {
+	int rows = goodsDao.selectCount();
+		
+		return rows;
+
+	}
+
+	public List<Goods> getPage(int pageNo, int rowsPerPage) {
+		
+		List<Goods> list = goodsDao.selectByPage(pageNo, rowsPerPage);
+		
+		return list;
+	}
+	
+	
 
 	// -----------------------------------------------------------------------------------------
 }

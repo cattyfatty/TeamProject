@@ -122,4 +122,10 @@ public class GoodsDao {
 		return list;
 
 	}
+
+	public int selectCount() {
+		String sql ="select count(*) from goods ";
+		int rows = jdbcTemplate.queryForObject(sql, Integer.class);
+		return rows;
+	}
 }
