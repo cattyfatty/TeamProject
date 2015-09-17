@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 import com.mycompany.myapp.dao.CartDao;
 import com.mycompany.myapp.dao.GoodsDao;
 import com.mycompany.myapp.dao.MemberDao;
-import com.mycompany.myapp.dao.OrderItemsDao;
-import com.mycompany.myapp.dao.OrdersDao;
+import com.mycompany.myapp.dao.OrderItemDao;
+import com.mycompany.myapp.dao.OrderDao;
 import com.mycompany.myapp.dto.Cart;
 import com.mycompany.myapp.dto.Goods;
 import com.mycompany.myapp.dto.Members;
-import com.mycompany.myapp.dto.OrderItems;
-import com.mycompany.myapp.dto.Orders;
+import com.mycompany.myapp.dto.OrderItem;
+import com.mycompany.myapp.dto.Order;
 
 @Component
 public class GoodsService {
@@ -24,9 +24,9 @@ public class GoodsService {
 	@Autowired
 	private CartDao cartDao;
 	@Autowired
-	private OrderItemsDao orderItemsDao;
+	private OrderItemDao orderItemsDao;
 	@Autowired
-	private OrdersDao ordersDao;
+	private OrderDao ordersDao;
 	@Autowired
 	private MemberDao memberDao;
 
@@ -86,12 +86,12 @@ public class GoodsService {
 	
 	// -----------------------------------------------------------------------------------------
 	// OrderItems ���� ����
-	public void addOrderItems(OrderItems orderItmes) {
+	public void addOrderItems(OrderItem orderItmes) {
 		orderItemsDao.insert(orderItmes);
 	}
 	
-	public List<OrderItems> getOrderItems(int orderNo) {
-		List<OrderItems> list = orderItemsDao.selectByOrderNo(orderNo);
+	public List<OrderItem> getOrderItems(int orderNo) {
+		List<OrderItem> list = orderItemsDao.selectByOrderNo(orderNo);
 		
 		return list;
 	}
@@ -99,12 +99,12 @@ public class GoodsService {
 
 	// -----------------------------------------------------------------------------------------
 	// Orders ���� ����
-	public void addOrder(Orders orders) {
+	public void addOrder(Order orders) {
 		ordersDao.insert(orders);
 	}
 	
-	public List<Orders> getOrders(String memberId) {
-		List<Orders> list = ordersDao.selectByMemberId(memberId);
+	public List<Order> getOrders(String memberId) {
+		List<Order> list = ordersDao.selectByMemberId(memberId);
 		
 		return list;
 	}	

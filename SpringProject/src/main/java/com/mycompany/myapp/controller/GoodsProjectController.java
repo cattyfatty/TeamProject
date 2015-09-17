@@ -16,7 +16,7 @@ import com.mycompany.myapp.service.GoodsService;
 
 import com.mycompany.myapp.dto.Cart;
 import com.mycompany.myapp.dto.Goods;
-import com.mycompany.myapp.dto.Orders;
+import com.mycompany.myapp.dto.Order;
 
 @Controller
 public class GoodsProjectController {
@@ -110,7 +110,7 @@ public class GoodsProjectController {
 		
 		session.setAttribute("pageNo", pageNo);
 
-		List<Orders> orderlist = goodservice.getOrders(memberId);
+		List<Order> orderlist = goodservice.getOrders(memberId);
 		
 		model.addAttribute("orderlist", orderlist);
 		
@@ -162,7 +162,7 @@ public class GoodsProjectController {
 
 	public String orderdetail(String memberId, Model model) {
 		
-		List<Orders> list = goodservice.getOrders(memberId);
+		List<Order> list = goodservice.getOrders(memberId);
 		
 		
 		model.addAttribute("list", list);

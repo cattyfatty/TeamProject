@@ -1,6 +1,6 @@
 package com.mycompany.myapp.dto;
 
-public class OrderItems {
+public class OrderItem {
 	int orderItemNo;
 	int goodsItemNo;
 	int orderNo;

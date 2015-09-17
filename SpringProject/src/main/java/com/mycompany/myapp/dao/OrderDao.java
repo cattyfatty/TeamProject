@@ -15,15 +15,15 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import com.mycompany.myapp.dto.Orders;
+import com.mycompany.myapp.dto.Order;
 
 @Component
-public class OrdersDao {
+public class OrderDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Integer insert(Orders orders) {
+	public Integer insert(Order orders) {
 		Integer pk = null;
 		String sql = "insert into orders (order_price, member_id) values (?,?)";
 
@@ -50,20 +50,20 @@ public class OrdersDao {
 		return rows;
 	}
 
-	public List<Orders> selectByPage(int pageNo, int rowsPerPage) {
+	public List<Order> selectByPage(int pageNo, int rowsPerPage) {
 
 		String sql = "";
-		sql += "select order_no, order_date, order_arrival, order_price, member_id ";
-		sql += " from ";
+		sql += "select order_no, order_price, member_id ";
+		sql += " from orders ";
 		sql += " order by order_no desc ";
 		sql += "limit ?,?";
 
-		List<Orders> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
-				new RowMapper<Orders>() {
+		List<Order> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
+				new RowMapper<Order>() {
 
 					@Override
-					public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Orders orders = new Orders();
+					public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Order orders = new Order();
 						orders.setOrderNo(rs.getInt("order_no"));
 						orders.setOrderPrice(rs.getInt("order_price"));
 						orders.setMemberid(rs.getString("member_id"));
@@ -77,14 +77,14 @@ public class OrdersDao {
 
 	}
 
-	public Orders selectByPk(int orderNo) {
+	public Order selectByPk(int orderNo) {
 
 		String sql = "select * from orders where order_no=?";
-		Orders orders = jdbcTemplate.queryForObject(sql, new Object[] { orderNo }, new RowMapper<Orders>() {
+		Order orders = jdbcTemplate.queryForObject(sql, new Object[] { orderNo }, new RowMapper<Order>() {
 
 			@Override
-			public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Orders orders = new Orders();
+			public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Order orders = new Order();
 				orders.setMemberid(rs.getString("member_id"));
 				orders.setOrderNo(rs.getInt("order_no"));
 				orders.setOrderPrice(rs.getInt("order_price"));
@@ -96,15 +96,15 @@ public class OrdersDao {
 		return orders;
 	}
 
-	public List<Orders> selectByMemberId(String memberId) {
+	public List<Order> selectByMemberId(String memberId) {
 
 		String sql = "select * from orders where member_id=?";
 
-		List<Orders> list = jdbcTemplate.query(sql, new Object[] { memberId }, new RowMapper<Orders>() {
+		List<Order> list = jdbcTemplate.query(sql, new Object[] { memberId }, new RowMapper<Order>() {
 
 			@Override
-			public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Orders orders = new Orders();
+			public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Order orders = new Order();
 				orders.setOrderNo(rs.getInt("order_no"));
 				orders.setOrderPrice(rs.getInt("order_price"));
 				orders.setMemberid(rs.getString("member_id"));

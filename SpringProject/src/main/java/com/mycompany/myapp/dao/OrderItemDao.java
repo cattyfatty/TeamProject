@@ -16,15 +16,15 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.myapp.dto.Board;
-import com.mycompany.myapp.dto.OrderItems;
+import com.mycompany.myapp.dto.OrderItem;
 @Component
-public class OrderItemsDao {
+public class OrderItemDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	
-	public Integer insert(OrderItems orderitems) {
+	public Integer insert(OrderItem orderitems) {
 		Integer pk = null;
 		String sql ="insert into orderitems (order_no, goods_no, orderitem_amount) values (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -46,18 +46,18 @@ public class OrderItemsDao {
 	
 	}
 	
-	public List<OrderItems> selectByPage(int pageNo, int rowsPerPage)  {
+	public List<OrderItem> selectByPage(int pageNo, int rowsPerPage)  {
 		String sql = "";
 		sql += "select orderitem_no, order_no, goods_no, orderitem_amount ";
 		sql += "from orderitems ";
 		sql += "order by orderitem_no desc ";
 		sql += "limit ?,?";
 
-		List<OrderItems> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
-				new RowMapper<OrderItems>() {
+		List<OrderItem> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
+				new RowMapper<OrderItem>() {
 					@Override
-					public OrderItems mapRow(ResultSet rs, int rowNum) throws SQLException {
-						OrderItems orderItems = new OrderItems();
+					public OrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+						OrderItem orderItems = new OrderItem();
 						orderItems.setOrderItemNo(rs.getInt("orderitem_no"));
 						orderItems.setOrderNo(rs.getInt("order_no"));
 						orderItems.setGoodsItemNo(rs.getInt("goods_no"));
@@ -69,7 +69,7 @@ public class OrderItemsDao {
 		return list;
 	}
 	
-	public int update(OrderItems orderItems)  {
+	public int update(OrderItem orderItems)  {
 		int rows = 0;
 		String sql = "update orderitems set order_no=?, goods_no=?, "
 				+ "orderitem_amount=? where orderitem_no=?";		
@@ -87,15 +87,15 @@ public class OrderItemsDao {
 	}
 	
 	
-	public List<OrderItems> selectByOrderNo(int OrderNo) {
+	public List<OrderItem> selectByOrderNo(int OrderNo) {
 	
 		String sql = "select * from orderitems where order_no=?";
 		
-		List<OrderItems> list = jdbcTemplate.query(sql, new Object[] {OrderNo},
-				new RowMapper<OrderItems>() {
+		List<OrderItem> list = jdbcTemplate.query(sql, new Object[] {OrderNo},
+				new RowMapper<OrderItem>() {
 					@Override
-					public OrderItems mapRow(ResultSet rs, int rowNum) throws SQLException {
-						OrderItems orderItems = new OrderItems(); 
+					public OrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+						OrderItem orderItems = new OrderItem(); 
 						orderItems.setOrderAmount(rs.getInt("orderitem_amount"));
 						orderItems.setOrderItemNo(rs.getInt("orderitem_no"));
 						orderItems.setOrderNo(rs.getInt("order_no"));
@@ -107,16 +107,16 @@ public class OrderItemsDao {
 		return list;
 	}
 	
-	public OrderItems selectByPk(int OrderItemNo) {
+	public OrderItem selectByPk(int OrderItemNo) {
 		String sql = "select * from orderitems where orderitem_no=?";
 		
-		OrderItems orderItems = jdbcTemplate.queryForObject(
+		OrderItem orderItems = jdbcTemplate.queryForObject(
 				sql,
 				new Object[] {OrderItemNo},
-				new RowMapper<OrderItems> () {
+				new RowMapper<OrderItem> () {
 					@Override
-					public OrderItems mapRow(ResultSet rs, int rowNum) throws SQLException {
-						OrderItems orderItems = new OrderItems();
+					public OrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+						OrderItem orderItems = new OrderItem();
 						orderItems.setOrderAmount(rs.getInt("orderitem_amount"));
 						orderItems.setOrderItemNo(rs.getInt("orderitem_no"));
 						orderItems.setOrderNo(rs.getInt("order_no"));
