@@ -2,13 +2,19 @@ package com.mycompany.myapp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.mycompany.myapp.service.GoodsService;
 
 @Controller
 public class GoodsProjectController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GoodsProjectController.class);
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	@RequestMapping("/project/home")
 	public String projectHome() {
@@ -46,5 +52,33 @@ public class GoodsProjectController {
 		return "project/productList";
 	}
 	
+	@RequestMapping("/project/productDetail")
+	public String projectProductDetail() {
+		logger.info("project-productDetail");
+		return "project/productDetail";
+	}
 	
+	@RequestMapping("/project/cartList")
+	public String projectCartList() {
+		logger.info("project-cartList");
+		return "project/cartList";
+	}
+	
+	@RequestMapping("/project/ordersList")
+	public String projectOrderList() {
+		logger.info("project-orderList");
+		return "project/ordersList";
+	}
+	
+	@RequestMapping("/project/orderDetail")
+	public String projectOrderDetail() {
+		logger.info("project-orderDetail");
+		return "project/orderDetail";
+	}
+	
+	@RequestMapping("/project/order")
+	public String projectOrder() {
+		logger.info("project-order");
+		return "redirect:/project/ordersList";
+	}
 }

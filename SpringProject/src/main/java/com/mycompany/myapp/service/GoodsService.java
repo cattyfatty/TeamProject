@@ -31,7 +31,7 @@ public class GoodsService {
 	private MemberDao memberDao;
 
 	// -----------------------------------------------------------------------------------------
-	// Members °ü·Ã ¼­ºñ½º
+	// Members ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void joinMember(Members member) {
 		memberDao.insert(member);
 	}
@@ -46,12 +46,16 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Cart °ü·Ã ¼­ºñ½º
-	public void addCart(Cart cart) {
+	// Cart ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void addCart(String memberId, int amount, int productNo) {
+		Cart cart = new Cart();
+		cart.setmemberId(memberId);
+		cart.setcartAmount(amount);
+		cart.setproductNo(productNo);
 		cartDao.insert(cart);
 	}
 	
-	public List<Cart> showCart(String memberId) {
+	public List<Cart> getCart(String memberId) {
 		List<Cart> list = cartDao.selectByid(memberId);
 		
 		return list;		
@@ -63,12 +67,24 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// OrderItems °ü·Ã ¼­ºñ½º
+	// ì£¼ë¬¸ê´€ë ¨
+	public void order(String memberId) {
+		List<Cart> cartList = getCart(memberId);
+		deleteCart(memberId);
+		for (Cart cart : cartList) {
+			
+		}
+		
+	}
+	// -----------------------------------------------------------------------------------------
+	
+	// -----------------------------------------------------------------------------------------
+	// OrderItems ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void addOrderItems(OrderItems orderItmes) {
 		orderItemsDao.insert(orderItmes);
 	}
 	
-	public List<OrderItems> showOrderItems(int orderNo) {
+	public List<OrderItems> getOrderItems(int orderNo) {
 		List<OrderItems> list = orderItemsDao.selectByOrderNo(orderNo);
 		
 		return list;
@@ -76,12 +92,12 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Orders °ü·Ã ¼­ºñ½º
+	// Orders ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void addOrder(Orders orders) {
 		ordersDao.insert(orders);
 	}
 	
-	public List<Orders> showOrders(String memberId) {
+	public List<Orders> getOrders(String memberId) {
 		List<Orders> list = ordersDao.selectByMemberId(memberId);
 		
 		return list;
@@ -89,14 +105,14 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Goods °ü·Ã ¼­ºñ½º
-	public List<Goods> showGoods(int pageNo, int rowsPerPage) {
+	// Goods ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public List<Goods> getGoods(int pageNo, int rowsPerPage) {
 		List<Goods> list = goodsDao.selectByPage(pageNo, rowsPerPage);
 		
 		return list;
 	}
 	
-	public Goods showGoodsDetail(int goodsNo) {
+	public Goods getGoodsDetail(int goodsNo) {
 		Goods goods = goodsDao.selectByPk(goodsNo);
 		
 		return goods;
