@@ -120,6 +120,14 @@ public class GoodsService {
 		return goods;
 	}
 
+	
+	public Members getMembers(String memberId) {
+		Members member = memberDao.selectByPk(memberId);
+		
+		return member;
+	}
+	
+	
 	public int getTotalBoardNo() {
 	int rows = goodsDao.selectCount();
 		

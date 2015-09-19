@@ -85,14 +85,19 @@
 				<th style="width:60px">주문금액 </th>
 			</tr>
 			
-			<c:forEach var="order" items="${orderlist}">
+			
 				<tr>
+				<c:forEach var="order" items="${orderlist}">
 					<td><a href="orderDetail?orderNo=${order.orderNo}">${order.orderNo}</a></td>
-					<td>${order.memberid}</td>
+				</c:forEach>
+				<c:forEach var="member" items="${memberlist}">
+					<td>${member.name}</td>
+				</c:forEach>
+				<c:forEach var="order" items="${orderlist}">
 					<td>${order.orderPrice}</td>
-				
+				</c:forEach>
 				</tr>
-			</c:forEach>
+			
 			
 		</table>
 		
