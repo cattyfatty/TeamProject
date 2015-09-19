@@ -60,7 +60,6 @@ public class GoodsProjectController {
 	@RequestMapping("/project/goodsList")
 	public String projectProductList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
 		logger.info("project-productList");
-		session.setAttribute("pageNo", pageNo);
 		
 		
 		int rowsPerPage = 10;
@@ -89,7 +88,7 @@ public class GoodsProjectController {
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("list", goodslist);
+		model.addAttribute("goodslist", goodslist);
 		
 		return "project/goodsList";                                    
 	}
@@ -161,6 +160,7 @@ public class GoodsProjectController {
 	public String orderdetail(int orderNo, Model model) {
 		
 		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
+		
 		
 		
 		model.addAttribute("orderItem", orderItem);
