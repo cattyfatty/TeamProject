@@ -51,8 +51,9 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/join")
-	public String projectJoin() {
+	public String projectJoin(Members member) {
 		logger.info("project-join");
+		goodservice.joinMember(member);
 		return "redirect:/project/loginForm";
 	}
 	
