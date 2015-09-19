@@ -187,17 +187,6 @@ public class GoodsProjectController {
 		return "project/orderDetail";
 		
 	}
-	
-	@RequestMapping("/project/addCart")
-	public String addCart(Cart cart,HttpSession session){
-		
-		
-		
-		goodservice.addCart(cart);
-		
-		return "redirect:/project/goodList";
-	}
-	
 
 	
 	@RequestMapping("/project/cartList")
