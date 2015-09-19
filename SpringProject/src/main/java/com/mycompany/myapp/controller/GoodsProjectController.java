@@ -147,17 +147,19 @@ public class GoodsProjectController {
 
 	@RequestMapping("/project/addCart")
 
-	public String addCart(String amount,int goodsNo,HttpSession session){
-
-	Cart cart = new Cart();
-	int cartamount = Integer.parseInt(amount);
+	public String addCart(Goods goods,int amount,HttpSession session){
+	
  	
+	Cart cart =new Cart();
+	
 	Members mem=(Members) session.getAttribute("member");
 	cart.setmemberId(mem.getId());
-	cart.setcartAmount(cartamount);
-	cart.setGoods_no(goodsNo);
+	cart.setcartAmount(amount);
+	cart.setGoods_no(goods.getNo());
+	logger.info(""+goods.getNo());
+	logger.info( mem.getId());
 	goodservice.addCart(cart);
-	return "redirect:/project/goodList";
+	return "redirect:/project/goodsList";
 	}
 	
 	@RequestMapping("/project/orderdetail")

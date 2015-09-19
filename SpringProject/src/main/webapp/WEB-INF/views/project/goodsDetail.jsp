@@ -79,8 +79,9 @@ pre {
 </style>
 
 <script>
-	function checkAmount() {
-		var amount = document.getElementById("amount").value;
+	function sendData() {
+		var tocart = document.tocart;
+		var amount = document.tocart.amount.value;
 		var c = 0;
 
 		if (amount == "") {
@@ -95,6 +96,7 @@ pre {
 
 			if (c == amount.length) {
 				alert(amount + '개를 입력하셨습니다.');
+				tocart.submit();
 			}
 
 			else if (c < amount.length) {
@@ -109,10 +111,12 @@ pre {
 
 <body>
 	<h4>게시물 보기</h4>
+	<form name="tocart" method="post" action="addCart">
 	<div id="part1">
 		<div id="part1_1">
+	
 			<span class="title">상품번호:</span> <span class="content">${goods.no}</span>
-			<input type="hidden" name="goodsNo" value="${goods.no}"> <br />
+			<input type="hidden" name="no" value="${goods.no }"/>
 			<span class="title">상품명:</span> <span class="content">${goods.name}</span>
 			<br /> <span class="title">가격:</span> <span class="content">${goods.price}</span>
 			<br /> <span class="title">상품종류:</span> <span class="content">${goods.kind}</span>
@@ -127,13 +131,13 @@ pre {
 		<div id="part2_1">
 			<span class="title">주문수량</span> <input type="text" id="amount"
 				name="amount" />
-			<button onclick="checkAmount()">주문수량 입력</button>
+			
 		</div>
 	</div>
-
+	</form>
 	<div id="buttonGroup">
 		<a href="goodsList?pageNo=${pageNo}">목록</a> 
-		<a href="addCart?goodsNo=${goods.no}&amount=amount">장바구니에 넣기</a>
+		<a href="javascript:sendData()">장바구니에 넣기</a>
 	</div>
 </body>
 </html>
