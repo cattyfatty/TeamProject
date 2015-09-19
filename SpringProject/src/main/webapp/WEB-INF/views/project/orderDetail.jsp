@@ -88,21 +88,22 @@
 				<th style="width:60px">가격</th>
 			</tr>
 			
+			<tr>
 			<c:forEach var="orderItem" items="${orderItem}">
-				<tr>
+				
 					<td>${orderItem.goodsItemNo}</td>
 			</c:forEach>
 			
 			<c:forEach var="goodslist" items="${goodslist}">
-					<td>${goodslist.getName}</td>
+					<td>${goodslist.name}</td>
 			</c:forEach>
 			
 			<c:forEach var="orderItem" items="${orderItem}">
 					<td>${orderItem.orderAmount}</td>
-					<td>${orderItem.orderPrice}</td>
 			</c:forEach>
-					
-				
+			<c:forEach var="goodslist" items="${goodslist}">
+					<td>${goodslist.price}</td>
+			</c:forEach>
 				</tr>
 			
 		</table>

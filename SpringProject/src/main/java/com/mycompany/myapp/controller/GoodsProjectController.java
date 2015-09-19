@@ -172,10 +172,10 @@ public class GoodsProjectController {
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		int totalOrderNo = goodservice.getTotalOrderItemNo();
+		int totalOrderItemNo = goodservice.getTotalOrderItemNo();
 		
-		int totalPageNo = totalOrderNo / rowsPerPage;
-		if(totalOrderNo % rowsPerPage > 0) { totalPageNo += 1; }
+		int totalPageNo = totalOrderItemNo / rowsPerPage;
+		if(totalOrderItemNo % rowsPerPage > 0) { totalPageNo += 1; }
 		
 		int totalGroupNo = totalPageNo / pagesPerGroup;
 		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }

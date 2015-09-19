@@ -89,11 +89,7 @@
 				<tr>
 				<c:forEach var="order" items="${orderlist}">
 					<td><a href="orderDetail?orderNo=${order.orderNo}">${order.orderNo}</a></td>
-				</c:forEach>
-				<c:forEach var="member" items="${memberlist}">
-					<td>${member.name}</td>
-				</c:forEach>
-				<c:forEach var="order" items="${orderlist}">
+					<td>${order.memberid}</td>
 					<td>${order.orderPrice}</td>
 				</c:forEach>
 				</tr>
