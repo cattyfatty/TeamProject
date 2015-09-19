@@ -113,10 +113,11 @@ public class CartDao {
 		return list;
 	}
 	
-	public List<Cart> selectByPage(int pageNo, int rowsPerPage){
+	public List<Cart> selectByPage(String memberId, int pageNo, int rowsPerPage){
 		String sql = "";
-		sql += " select cart_no, cart_amount, cart_date, goods_no, member_id  ";
+		sql += " select cart_no, cart_amount, cart_date, goods_no ";
 		sql += "from carts ";
+		sql += "where member_id=? ";
 		sql += "order by cart_no desc ";
 		sql += "limit ?,?";
 		List<Cart> list = jdbcTemplate.query(
@@ -135,7 +136,6 @@ public class CartDao {
 						cart.setGoods_no(rs.getInt("goods_no"));
 						return cart;
 					}
-					
 				});
 		
 		return list;
