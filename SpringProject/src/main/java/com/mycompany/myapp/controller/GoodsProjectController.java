@@ -204,4 +204,12 @@ public class GoodsProjectController {
 		
 		return "project/cartList";                                    
 	}
+	@RequestMapping("/project/deleteCart")
+	public String delete(String memberId) {
+		logger.info("deleteCart()");
+		
+		goodservice.deleteCart(memberId);
+		
+		return "redirect:/project/cartList";
+	}
 }
