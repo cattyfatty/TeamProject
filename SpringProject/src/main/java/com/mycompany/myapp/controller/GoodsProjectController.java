@@ -197,6 +197,7 @@ public class GoodsProjectController {
 		int pagesPerGroup = 3;
 		
 		int totalBoardNo = goodservice.getTotalBoardNo();
+		Members mem = (Members) session.getAttribute("member");
 		
 		int totalPageNo = totalBoardNo / rowsPerPage;
 		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
@@ -210,7 +211,7 @@ public class GoodsProjectController {
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
 		
-	List<Cart> cartList = goodservice.getCartPage(pageNo, rowsPerPage);
+	List<Cart> cartList = goodservice.getCartPage(pageNo, rowsPerPage, mem.getId());
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);

@@ -113,7 +113,7 @@ public class CartDao {
 		return list;
 	}
 	
-	public List<Cart> selectByPage(String memberId, int pageNo, int rowsPerPage){
+	public List<Cart> selectByPage(int pageNo, int rowsPerPage, String memberId){
 		String sql = "";
 		sql += " select cart_no, cart_amount, cart_date, goods_no ";
 		sql += "from carts ";
@@ -122,7 +122,7 @@ public class CartDao {
 		sql += "limit ?,?";
 		List<Cart> list = jdbcTemplate.query(
 				sql,
-				new Object[]{(pageNo-1)*rowsPerPage, rowsPerPage},
+				new Object[]{memberId, (pageNo-1)*rowsPerPage, rowsPerPage},
 				new RowMapper<Cart>(){
 
 					@Override
