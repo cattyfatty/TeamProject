@@ -18,7 +18,7 @@ public class GoodsDaoTest extends ApplicationContextLoader {
 	public void testInsert(){
 		Goods goods = new Goods();
 		goods.setCalory(130);
-		goods.setGift("ÀÎÇü");
+		goods.setGift("ï¿½ï¿½ï¿½ï¿½");
 		goods.setKind("desert");
 		goods.setName("icecream");
 		goods.setPrice(1200);
@@ -35,7 +35,7 @@ public class GoodsDaoTest extends ApplicationContextLoader {
 	public void testUpdate(){
 		Goods goods = new Goods();
 		goods.setCalory(130);
-		goods.setGift("ÀÎÇü");
+		goods.setGift("ï¿½ï¿½ï¿½ï¿½");
 		goods.setKind("desert");
 		goods.setName("icecream");
 		goods.setPrice(1200);
@@ -65,7 +65,7 @@ public class GoodsDaoTest extends ApplicationContextLoader {
 	public void testDelete(){
 		Goods goods = new Goods();
 		goods.setCalory(1300);
-		goods.setGift("ÀÎÇü");
+		goods.setGift("ï¿½ï¿½ï¿½ï¿½");
 		goods.setKind("desert");
 		goods.setName("cream");
 		goods.setPrice(1200);
@@ -82,14 +82,14 @@ public class GoodsDaoTest extends ApplicationContextLoader {
 	public void testSelectByPk(){
 		Goods goods = new Goods();
 		goods.setCalory(1800);
-		goods.setGift("ÀÎÇü");
+		goods.setGift("ï¿½ï¿½ï¿½ï¿½");
 		goods.setKind("dsert");
 		goods.setName("cream12");
 		goods.setPrice(1230);
 		goods.setSize("Mlarge");
 		Integer gno = goodsDao.insert(goods);
 		
-		Assert.assertNotNull(object);
+		Assert.assertNotNull(goods);
 		Goods goods2 = goodsDao.selectByPk(gno);
 		
 		
