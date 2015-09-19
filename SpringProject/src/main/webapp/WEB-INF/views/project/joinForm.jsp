@@ -7,7 +7,8 @@
 		<title>회원가입</title>
 		<style type="text/css">
 			body{
-				font-size: small;		
+				font-size: small;
+				color: white;
 			}
 			
 			input {
@@ -21,32 +22,32 @@
 	<body>
 	
 		<h4>회원가입</h4>                          
-		<form method="post" action="write">
+		<form method="post" action="join">
 			<table>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="mid"/></td>
+					<td><input type="text" name="id"/></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="mpass"/></td>
+					<td><input type="password" name="password"/></td>
 				</tr>
 				<tr>
 					<td>이름</td>
 				
-					<td><input type="text" name="mname"/></td>
+					<td><input type="text" name="name"/></td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="maddress"/></td>
+					<td><input type="text" name="address"/></td>
 				</tr>
 				<tr>
 					<td>연락처(전화)</td>
-					<td><input type="file" name="mtel"/></td>
+					<td><input type="text" name="tel"/></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="email" name="memail"/></td>
+					<td><input type="email" name="email"/></td>
 				</tr>
 								
 				<tr>

@@ -29,7 +29,7 @@ public class GoodsProjectController {
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "project/home";
+		return "home";
 	}
 	
 	@RequestMapping("/project/loginForm")
@@ -44,7 +44,7 @@ public class GoodsProjectController {
 		Members loggedIn = goodservice.loginMember(member);
 		
 		session.setAttribute("member", loggedIn);
-		return "redirect:/project/home";
+		return "redirect:/project/goodsList";
 	}
 	
 	@RequestMapping("/project/joinForm")
@@ -54,9 +54,10 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/join")
-	public String projectJoin() {
+	public String projectJoin(Members member) {
 		logger.info("project-join");
-		return "redirect:/project/home";
+		goodservice.joinMember(member);
+		return "redirect:/project/loginForm";
 	}
 	
 	@RequestMapping("/project/goodsList")
