@@ -47,11 +47,7 @@ public class GoodsService {
 
 	// -----------------------------------------------------------------------------------------
 	// Cart ���� ����
-	public void addCart(String memberId, int amount, int productNo) {
-		Cart cart = new Cart();
-		cart.setmemberId(memberId);
-		cart.setcartAmount(amount);
-		cart.setGoods_no(productNo);
+	public void addCart(Cart cart) {
 		cartDao.insert(cart);
 	}
 	

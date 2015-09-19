@@ -12,11 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.myapp.service.GoodsService;
-
 import com.mycompany.myapp.dto.Cart;
 import com.mycompany.myapp.dto.Goods;
+import com.mycompany.myapp.dto.Members;
 import com.mycompany.myapp.dto.Order;
+import com.mycompany.myapp.service.GoodsService;
 
 @Controller
 public class GoodsProjectController {
@@ -34,13 +34,16 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/loginForm")
 	public String projectLoginForm() {
-		logger.info("project-login()");
+		logger.info("project-loginForm()");
 		return "project/loginForm";
 	}
 	
 	@RequestMapping("/project/login")
-	public String projectLogin() {
+	public String projectLogin(Members member, HttpSession session) {
 		logger.info("project-login()");
+		Members loggedIn = goodservice.loginMember(member);
+		
+		session.setAttribute("member", loggedIn);
 		return "redirect:/project/home";
 	}
 	
@@ -145,15 +148,9 @@ public class GoodsProjectController {
 	
 	}
 	
-	
-	
 	@RequestMapping("/project/addCart")
-	public String addCart(int amount,Goods goods,HttpSession session){
-		Cart cart = new Cart();
-		cart.setcartAmount(amount);
-		cart.setGoods_no(goods.getNo());
-		//cart.setmemberId(session.getAttribute("loginId"));
-		goodservice.addCart(session.getAttribute("memberId").toString(),amount,goods.getNo());
+	public String addCart(Cart cart,HttpSession session){
+		goodservice.addCart(cart);
 		
 		return "redirect:/project/goodList";
 	}
