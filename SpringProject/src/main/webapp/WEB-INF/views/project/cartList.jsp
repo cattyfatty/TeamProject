@@ -132,7 +132,7 @@
 		<div id="buttonGroup">
 		
 			<a href="deleteCart">장바구니 비우기</a>
-			<a href="ordersList">주문하기</a>
+			<a href="addOrder">주문하기</a>
 		
 	
 	
