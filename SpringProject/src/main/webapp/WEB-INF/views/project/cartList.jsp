@@ -95,8 +95,7 @@
 				<!-- <th style="width: 60px">총가격</th> -->
 				<th style="width: 80px">날짜</th>
 			</tr>
-			<% int price = 0; %>
-			
+					
 				<tr>
 			<c:forEach var="goods" items="${goodsList}">
 					<td>${goods.no}</td>
