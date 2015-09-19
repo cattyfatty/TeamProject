@@ -73,6 +73,13 @@
 				color: aqua;
 			}
 		</style>
+		<script src="../resources/js/jquery-1.11.3.min.js"></script>
+		<script>
+			$(function() {
+				window.parent.$("#orderSystem").html("<a href='project/goodsList' target='iframe'>주문 시스템</a>");
+			});
+		</script>
+		
 	</head>
 	
 	<body>

@@ -143,6 +143,31 @@ public class GoodsProjectController {
 	
 	}
 	
+	//addcart
+
+	@RequestMapping("/project/addCart")
+
+	public String addCart(int amount,int goodsNo,HttpSession session){
+
+	Cart cart = new Cart();
+
+	Members mem=(Members) session.getAttribute("member");
+
+	cart.setmemberId(mem.getId());
+
+	cart.setcartAmount(amount);
+
+	cart.setGoods_no(goodsNo);
+
+	goodservice.addCart(cart);
+
+
+	return "redirect:/project/goodList";
+
+	}
+
+
+	
 	@RequestMapping("/project/orderdetail")
 
 	public String orderdetail(int orderNo, Model model) {
@@ -209,5 +234,13 @@ public class GoodsProjectController {
 		model.addAttribute("cartlist", cartList);
 		
 		return "project/cartList";                                    
+	}
+	@RequestMapping("/project/deleteCart")
+	public String delete(String memberId) {
+		logger.info("deleteCart()");
+		
+		goodservice.deleteCart(memberId);
+		
+		return "redirect:/project/cartList";
 	}
 }
