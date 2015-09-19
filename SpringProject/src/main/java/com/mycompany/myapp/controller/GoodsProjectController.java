@@ -104,11 +104,12 @@ public class GoodsProjectController {
 
 	
 	@RequestMapping("/project/orderList")
-	public String orderlist(String memberId, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
+	public String orderlist(@RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		session.setAttribute("pageNo", pageNo);
+		Members mem = (Members) session.getAttribute("member");
 
-		List<Order> orderlist = goodservice.getOrders(memberId);
+		List<Order> orderlist = goodservice.getOrders(mem.getId());
 		
 		List<Members> memberlist = new ArrayList<Members>();
 		for(Order order : orderlist){
@@ -144,7 +145,7 @@ public class GoodsProjectController {
 		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("orderlist", orderlist); 
 		
-		return "project/orderList";
+		return "project/ordersList";
 
 	
 	}
