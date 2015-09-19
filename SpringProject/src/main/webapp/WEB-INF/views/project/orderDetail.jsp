@@ -90,14 +90,20 @@
 			
 			<c:forEach var="orderItem" items="${orderItem}">
 				<tr>
-					<td>${orderItem.orderNo}</td>
 					<td>${orderItem.goodsItemNo}</td>
+			</c:forEach>
+			
+			<c:forEach var="goodslist" items="${goodslist}">
+					<td>${goodslist.getName}</td>
+			</c:forEach>
+			
+			<c:forEach var="orderItem" items="${orderItem}">
 					<td>${orderItem.orderAmount}</td>
 					<td>${orderItem.orderPrice}</td>
+			</c:forEach>
 					
 				
 				</tr>
-			</c:forEach>
 			
 		</table>
 		
