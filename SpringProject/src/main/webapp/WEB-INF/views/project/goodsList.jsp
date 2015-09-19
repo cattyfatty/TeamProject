@@ -73,6 +73,13 @@
 				color: aqua;
 			}
 		</style>
+		<script src="../resources/js/jquery-1.11.3.min.js"></script>
+		<script>
+			$(function() {
+				window.parent.location.reload(true);				
+			});
+		</script>
+		
 	</head>
 	
 	<body>
