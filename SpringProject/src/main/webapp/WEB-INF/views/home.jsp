@@ -140,8 +140,11 @@
 						<li><a href="board/list" target="iframe">일반 게시판</a></li>
 						<li><a href="product/list" target="iframe">상품 게시판</a></li>
 						<li><a href="" target="iframe">사진 게시판</a></li>
+						<c:if test="${member == null}">
 						<li><a href="project/loginForm" target="iframe">주문 시스템</a></li>
-						<c:if test="member">
+						</c:if>
+						<c:if test="${member != null}">
+						<li><a href="project/goodsList" target="iframe">주문 시스템</a></li>
 						</c:if>
 						
 					</ul>

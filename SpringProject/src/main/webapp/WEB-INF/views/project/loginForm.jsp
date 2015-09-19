@@ -49,7 +49,7 @@
 				margin: 0 auto;
 			}
 		</style>
-		<script src="resources/js/jquery-1.11.3.min.js" ></script>
+		<!-- <script src="resources/js/jquery-1.11.3.min.js" ></script>
 		<script>
 			$(function(){
 		
@@ -58,7 +58,7 @@
 	
 	
 			})
-		</script>
+		</script> -->
 	</head>
 	<body>
 		<div id="wrap">
