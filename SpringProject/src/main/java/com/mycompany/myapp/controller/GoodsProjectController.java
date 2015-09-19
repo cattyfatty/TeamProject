@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.mycompany.myapp.dto.*;
 import com.mycompany.myapp.service.*;
-//commit
+
 @Controller
 public class GoodsProjectController {
 
@@ -143,7 +143,7 @@ public class GoodsProjectController {
 	
 	}
 	
-	//addcart
+	
 
 	@RequestMapping("/project/addCart")
 
