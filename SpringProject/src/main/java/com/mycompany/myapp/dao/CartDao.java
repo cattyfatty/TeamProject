@@ -90,7 +90,7 @@ public class CartDao {
 		return cart;
 	}
 	
-	public List<Cart> selectByid(String memid){
+	public List<Cart> selectById(String memid){
 		String sql = "select * from carts where member_id=?";
 		List<Cart> list = jdbcTemplate.query(sql
 						,new Object[]{memid},
