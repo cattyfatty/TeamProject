@@ -98,7 +98,7 @@
 	
 			<c:forEach var="cart" items="${cartlist}">
 				<tr>
-					<td>${goods.no}</td>
+					<td>${cart.}</td>
 					<td>${cart.name}</td>
 					<td>${cart.amount}</td>
 					<td>${cart.price}</td>
