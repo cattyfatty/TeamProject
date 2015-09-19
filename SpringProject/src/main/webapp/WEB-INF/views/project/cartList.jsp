@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*, com.mycompany.myapp.dto.* "%>
 
 
 <!DOCTYPE html>
@@ -10,10 +11,7 @@
 	<title>Insert title here</title>
 	<style type="text/css">
 		body{
-			background-color: black;
 			color: white;
-			
-		
 		}
 		h1{
 			text-align: center;
@@ -90,13 +88,28 @@
 			<tr>
 				<th style="width: 50px">상품번호</th>
 				<th>상품명</th>
-				<th style="width: 60px">단일가격</th>
+				<th style="width: 60px">가격</th>
 				<th style="width: 40px">수량</th>
 				<!-- <th style="width: 60px">총가격</th> -->
 				<th style="width: 80px">날짜</th>
 			</tr>
 					
+				<% 
+				List<Cart> cartList = (List<Cart>)request.getAttribute("cartList");
+				List<Goods> goodsList = (List<Goods>)request.getAttribute("goodsList");
+				for(int i=0; i<cartList.size(); i++) {
+				%>
 				<tr>
+					<td><%=goodsList.get(i).getNo()%></td>
+					<td><%=goodsList.get(i).getName()%></td>
+					<td><%=cartList.get(i).getCart_amount()%>*<%=goodsList.get(i).getPrice()%></td>
+					<td><%=cartList.get(i).getCart_amount()%></td>
+					<td><%=cartList.get(i).getCart_date()%></td>
+				</tr>
+				<%	
+				}
+				%>
+				<%-- <tr>
 			<c:forEach var="goods" items="${goodsList}">
 					<td>${goods.no}</td>
 					<td>${goods.name}</td>
@@ -106,7 +119,7 @@
 					<td>${cart.cart_amount}</td>
 					<td>${cart.cart_date}</td>
 			</c:forEach>
-				</tr>
+				</tr> --%>
 			
 					<%-- <td>${cart.price}</td> --%>
 					<%-- <td>${cart.amount * cart.price}</td> --%>
