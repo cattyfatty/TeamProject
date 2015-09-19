@@ -122,7 +122,7 @@ public class CartDao {
 		sql += "limit ?,?";
 		List<Cart> list = jdbcTemplate.query(
 				sql,
-				new Object[]{(pageNo-1)*rowsPerPage, rowsPerPage, memberId},
+				new Object[]{memberId, (pageNo-1)*rowsPerPage, rowsPerPage},
 				new RowMapper<Cart>(){
 
 					@Override
