@@ -145,6 +145,7 @@
 						</c:if>
 						<c:if test="${member != null}">
 						<li><a href="project/goodsList" target="iframe">주문 시스템</a></li>
+						${member.getId() }
 						</c:if>
 						
 					</ul>
