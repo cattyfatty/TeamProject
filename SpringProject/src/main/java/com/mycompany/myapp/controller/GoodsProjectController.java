@@ -153,31 +153,21 @@ public class GoodsProjectController {
 
 	@RequestMapping("/project/addCart")
 
-	public String addCart(int amount,int goodsNo,HttpSession session){
+	public String addCart(String amount,int goodsNo,HttpSession session){
 
 	Cart cart = new Cart();
-
+	int cartamount = Integer.parseInt(amount);
+ 	
 	Members mem=(Members) session.getAttribute("member");
-
 	cart.setmemberId(mem.getId());
-
-	cart.setcartAmount(amount);
-
+	cart.setcartAmount(cartamount);
 	cart.setGoods_no(goodsNo);
-
 	goodservice.addCart(cart);
-
-
 	return "redirect:/project/goodList";
-
 	}
-
-
 	
 	@RequestMapping("/project/orderdetail")
-
 	public String orderdetail(int orderNo, Model model) {
-		
 		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
 		
 		List<Goods> goodslist = new ArrayList<Goods>();
@@ -186,6 +176,7 @@ public class GoodsProjectController {
 			goodslist.add(goods);
 		}
 		
+
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderItem", orderItem);
 		model.addAttribute("goodslist", goodslist);

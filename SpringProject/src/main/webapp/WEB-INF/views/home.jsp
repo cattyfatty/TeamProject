@@ -111,6 +111,8 @@
 				border: none;
 			}
 		</style>
+		
+		<script src="resources/js/jquery-1.11.3.min.js"></script>
 	</head>
 	
 	<body>

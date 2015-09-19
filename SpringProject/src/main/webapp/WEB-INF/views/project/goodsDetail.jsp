@@ -79,30 +79,32 @@ pre {
 </style>
 
 <script>
-		function checkAmount(){
-			var amount = document.getElementById("amount").value;
-			var c=0;
-			for(var i=0; i<amount.length; i++){
-				
-				if (amount.charAt(i)>='0' || amount.charAt(i)<='9')
-					c++;	
-			
+	function checkAmount() {
+		var amount = document.getElementById("amount").value;
+		var c = 0;
+
+		if (amount == "") {
+			alert("주문수량 입력해주셔야 합니다.!");
+
+		} else {
+			for (var i = 0; i < amount.length; i++) {
+				if (amount.charAt(i) >= '0' && amount.charAt(i) <= '9') {
+					c++;
+				}
 			}
-			
-			if(c == amount.length){
-				alert(amount+'개를 입력하셨습니다.');
+
+			if (c == amount.length) {
+				alert(amount + '개를 입력하셨습니다.');
 			}
-			else if(amount == "" ){
-				alert("주문수량 입력해주셔야 합니다.!");
-				
+
+			else if (c < amount.length) {
+				document.getElementById("amount").value = "";
+				alert('숫자만 입력해주세요');
 			}
-			else{
-				alert('숫자만 입력해주세요!');
-			}
-			
 		}
-		
-		</script>
+
+	}
+</script>
 </head>
 
 <body>
@@ -110,8 +112,8 @@ pre {
 	<div id="part1">
 		<div id="part1_1">
 			<span class="title">상품번호:</span> <span class="content">${goods.no}</span>
-			<input type="hidden" name="goodsNo" value="${goods.no}">
-			<br /> <span class="title">상품명:</span> <span class="content">${goods.name}</span>
+			<input type="hidden" name="goodsNo" value="${goods.no}"> <br />
+			<span class="title">상품명:</span> <span class="content">${goods.name}</span>
 			<br /> <span class="title">가격:</span> <span class="content">${goods.price}</span>
 			<br /> <span class="title">상품종류:</span> <span class="content">${goods.kind}</span>
 			<br /> <span class="title">칼로리:</span> <span class="content">${goods.calory}</span>
@@ -131,7 +133,7 @@ pre {
 
 	<div id="buttonGroup">
 		<a href="goodsList?pageNo=${pageNo}">목록</a> 
-		<a href="addCart">장바구니에 넣기</a>
+		<a href="addCart?goodsNo=${goods.no}&amount=amount">장바구니에 넣기</a>
 	</div>
 </body>
 </html>
