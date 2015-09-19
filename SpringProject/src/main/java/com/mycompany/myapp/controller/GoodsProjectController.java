@@ -150,10 +150,11 @@ public class GoodsProjectController {
 	public String addCart(String amount,int goodsNo,HttpSession session){
 
 	Cart cart = new Cart();
-	
+	int cartamount = Integer.parseInt(amount);
+ 	
 	Members mem=(Members) session.getAttribute("member");
 	cart.setmemberId(mem.getId());
-	cart.setcartAmount(Integer.parseInt(amount));
+	cart.setcartAmount(cartamount);
 	cart.setGoods_no(goodsNo);
 	goodservice.addCart(cart);
 	return "redirect:/project/goodList";
