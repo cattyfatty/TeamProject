@@ -259,4 +259,12 @@ public class GoodsProjectController {
 		
 		return "redirect:/project/orderList";
 	}
+	
+
+	@RequestMapping("/project/logout")
+	public String logout(HttpSession session){
+		logger.info("logout()");
+		session.invalidate();
+		return "redirect:/";
+	}
 }
