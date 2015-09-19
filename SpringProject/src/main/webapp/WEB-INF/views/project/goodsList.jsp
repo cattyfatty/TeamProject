@@ -76,10 +76,12 @@
 		<script src="../resources/js/jquery-1.11.3.min.js"></script>
 		<script>
 			$(function() {
-				var parentMenu = window.parent.$("#boardMenu");
-				var orderSystemMenu = parentMenu.$("#orderSystem");
-				orderSystemMenu.html("<a href='project/goodsList' target='iframe'>주문 시스템</a>");
-				orderSystemMenu.after("<ul><li>로그아웃</li><li>카트보기</li></ul>");
+				
+				window.parent.$("#orderSystem").html("<a href='project/goodsList' target='iframe'>주문 시스템</a>");
+				window.parent.$("#orderSystem").find("a").after("<ul id='orderSystemMenu'></ul>");
+				window.parent.$("#orderSystemMenu").after("<li><a href='project/orderList'>주문보기</a></li>");
+				window.parent.$("#orderSystemMenu").after("<li><a>카트보기</a></li>");
+				window.parent.$("#orderSystemMenu").after("<li><a>로그아웃</a></li>");
 				
 			});
 		</script>

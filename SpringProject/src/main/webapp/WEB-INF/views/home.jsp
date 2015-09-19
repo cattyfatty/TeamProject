@@ -86,6 +86,10 @@
 				border-bottom: 1.5px dotted #4646bf;
 			}
 			
+			#content2 #menu li ul {
+				margin-top: 5px;
+			}
+			
 			#content2 #menu a {
 				display:block;
 				margin: 1px 10px 1px 20px;
