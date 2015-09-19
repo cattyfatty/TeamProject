@@ -133,7 +133,7 @@ pre {
 
 	<div id="buttonGroup">
 		<a href="goodsList?pageNo=${pageNo}">목록</a> 
-		<a href="addCart?goodsNo=goodsNo&amount=amount">장바구니에 넣기</a>
+		<a href="addCart?goodsNo=${goods.no}&amount=amount">장바구니에 넣기</a>
 	</div>
 </body>
 </html>
