@@ -113,15 +113,16 @@ public class CartDao {
 		return list;
 	}
 	
-	public List<Cart> selectByPage(int pageNo, int rowsPerPage){
+	public List<Cart> selectByPage(int pageNo, int rowsPerPage, String memberId){
 		String sql = "";
 		sql += " select cart_no, cart_amount, cart_date, goods_no, member_id  ";
 		sql += "from carts ";
+		sql += "where member_id=? ";
 		sql += "order by cart_no desc ";
 		sql += "limit ?,?";
 		List<Cart> list = jdbcTemplate.query(
 				sql,
-				new Object[]{(pageNo-1)*rowsPerPage, rowsPerPage},
+				new Object[]{(pageNo-1)*rowsPerPage, rowsPerPage, memberId},
 				new RowMapper<Cart>(){
 
 					@Override

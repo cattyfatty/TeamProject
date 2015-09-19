@@ -60,9 +60,9 @@ public class GoodsService {
 	public void deleteCart(String memberId) {
 		cartDao.delete(memberId);
 	}
-	public List<Cart> getCartPage(int pageNo, int rowsPerPage) {
+	public List<Cart> getCartPage(int pageNo, int rowsPerPage, String memberId) {
 		
-		List<Cart> list = cartDao.selectByPage(pageNo, rowsPerPage);
+		List<Cart> list = cartDao.selectByPage(pageNo, rowsPerPage, memberId);
 		
 		return list;
 	}
