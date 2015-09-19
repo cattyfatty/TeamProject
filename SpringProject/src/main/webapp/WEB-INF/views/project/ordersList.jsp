@@ -86,13 +86,13 @@
 			</tr>
 			
 			
-				<tr>
 				<c:forEach var="order" items="${orderlist}">
+				<tr>
 					<td><a href="orderDetail?orderNo=${order.orderNo}">${order.orderNo}</a></td>
 					<td>${order.memberid}</td>
 					<td>${order.orderPrice}</td>
-				</c:forEach>
 				</tr>
+				</c:forEach>
 			
 			
 		</table>

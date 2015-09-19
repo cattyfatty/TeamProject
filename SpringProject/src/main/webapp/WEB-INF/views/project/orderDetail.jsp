@@ -97,16 +97,12 @@
 			for(int i=0; i<orderItem.size(); i++){
 			%>
 			<tr>
-				
-					<td><%=orderItem.get(i).getGoodsItemNo()%></td>
-	
-					<td><%=goodslist.get(i).getName()%></td>
-			
-					<td><%=orderItem.get(i).getOrderAmount()%></td>
-	
-					<td><%=goodslist.get(i).getPrice()%></td>
-	
-				</tr>
+				<td><%=orderItem.get(i).getGoodsItemNo()%></td>
+				<td><%=goodslist.get(i).getName()%></td>
+				<td><%=orderItem.get(i).getOrderAmount()%></td>
+				<td><%=goodslist.get(i).getPrice()%></td>
+			</tr>
+			<%} %>
 			
 		</table>
 		
