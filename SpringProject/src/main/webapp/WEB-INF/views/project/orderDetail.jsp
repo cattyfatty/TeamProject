@@ -88,7 +88,7 @@
 				<th style="width:60px">가격</th>
 			</tr>
 			
-			<c:forEach var="orderItem" items="${orderDetail}">
+			<c:forEach var="orderItem" items="${orderItem}">
 				<tr>
 					<td>${orderItem.orderNo}</td>
 					<td>${orderItem.goodsItemNo}</td>

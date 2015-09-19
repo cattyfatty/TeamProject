@@ -162,6 +162,7 @@ public class GoodsProjectController {
 		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
 		
 		
+		
 		model.addAttribute("orderItem", orderItem);
 		
 		return "project/orderDetail";
