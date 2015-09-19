@@ -170,7 +170,7 @@ public class GoodsProjectController {
 	}
 	
 	
-	@RequestMapping("/project/orderdetail")
+	@RequestMapping("/project/orderDetail")
 	public String orderdetail(int orderNo, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
 		
 		int rowsPerPage = 10;
