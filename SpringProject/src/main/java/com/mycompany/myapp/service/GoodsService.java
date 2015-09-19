@@ -52,7 +52,7 @@ public class GoodsService {
 	}
 	
 	public List<Cart> getCart(String memberId) {
-		List<Cart> list = cartDao.selectByid(memberId);
+		List<Cart> list = cartDao.selectById(memberId);
 		
 		return list;		
 	}
