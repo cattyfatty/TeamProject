@@ -144,16 +144,28 @@ public class GoodsProjectController {
 
 	
 	}
-	
 	@RequestMapping("/project/addCart")
-	public String addCart(Cart cart,HttpSession session){
-		
-		
-		
-		goodservice.addCart(cart);
-		
-		return "redirect:/project/goodList";
+
+	public String addCart(int amount,int goodsNo,HttpSession session){
+
+	Cart cart = new Cart();
+
+	Members mem=(Members) session.getAttribute("member");
+
+	cart.setmemberId(mem.getId());
+
+	cart.setcartAmount(amount);
+
+	cart.setGoods_no(goodsNo);
+
+	goodservice.addCart(cart);
+
+
+	return "redirect:/project/goodList";
+
 	}
+
+
 	
 	@RequestMapping("/project/orderdetail")
 
