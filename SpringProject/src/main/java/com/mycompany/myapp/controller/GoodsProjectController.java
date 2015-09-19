@@ -162,8 +162,6 @@ public class GoodsProjectController {
 	cart.setmemberId(mem.getId());
 	cart.setcartAmount(amount);
 	cart.setGoods_no(goods.getNo());
-	logger.info(""+goods.getNo());
-	logger.info( mem.getId());
 	goodservice.addCart(cart);
 	return "redirect:/project/goodsList";
 	}
