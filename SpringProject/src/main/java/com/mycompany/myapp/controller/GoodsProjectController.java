@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.mycompany.myapp.dto.*;
 import com.mycompany.myapp.service.*;
-//commit
+
 @Controller
 public class GoodsProjectController {
 
@@ -110,6 +110,12 @@ public class GoodsProjectController {
 
 		List<Order> orderlist = goodservice.getOrders(memberId);
 		
+		List<Members> memberlist = new ArrayList<Members>();
+		for(Order order : orderlist){
+			Members member = goodservice.getMembers(order.getMemberid());
+			memberlist.add(member);
+		}
+		
 		model.addAttribute("orderlist", orderlist);
 		
 		int rowsPerPage = 10;
@@ -143,7 +149,7 @@ public class GoodsProjectController {
 	
 	}
 	
-	//addcart
+	
 
 	@RequestMapping("/project/addCart")
 
