@@ -29,7 +29,7 @@ public class MemberDao {
 		
 		@Override
 		public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
-			PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"member_id"});
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPassword());
 			pstmt.setString(3, member.getName());
