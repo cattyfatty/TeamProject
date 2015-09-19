@@ -81,7 +81,7 @@
 				window.parent.$("#orderSystem").find("a").after("<ul id='orderSystemMenu'></ul>");
 				window.parent.$("#orderSystemMenu").after("<li><a href='project/orderList' target='iframe'>주문보기</a></li>");
 				window.parent.$("#orderSystemMenu").after("<li><a href='project/cartList' target='iframe'>카트보기</a></li>");
-				window.parent.$("#orderSystemMenu").after("<li><a>로그아웃</a></li>");
+				window.parent.$("#orderSystemMenu").after("<li><a href='project/logout'>로그아웃</a></li>");
 				
 			});
 		</script>
