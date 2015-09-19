@@ -37,16 +37,20 @@ public class GoodsService {
 	}
 
 	public Members loginMember(Members member) {
-		Members isExist = memberDao.selectByPk(member.getId());
-		if (isExist.getPassword().equals(member.getPassword())) {
+		Members isExist = null;
+		try{
+			isExist = memberDao.selectByPk(member.getId());
+		} catch(Exception e) {
+			System.out.println("check id or pw");
+		}
+		if (isExist != null && isExist.getPassword().equals(member.getPassword())) {
 			return isExist;
-		} else
+		} else{
+			System.out.println("로그인실패");
 			return null;
+		}
 	}
-	// -----------------------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------------------
-	// Cart ���� ����
 	public void addCart(Cart cart) {
 		cartDao.insert(cart);
 	}

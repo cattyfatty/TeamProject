@@ -37,9 +37,13 @@ public class GoodsProjectController {
 	public String projectLogin(Members member, HttpSession session) {
 		logger.info("project-login()");
 		Members loggedIn = goodservice.loginMember(member);
-		
-		session.setAttribute("member", loggedIn);
-		return "redirect:/project/goodsList";
+		if(loggedIn != null){
+			session.setAttribute("member", loggedIn);
+			return "redirect:/project/goodsList";
+		}
+		else{
+			return "project/failLogin";
+		}
 	}
 	
 	@RequestMapping("/project/joinForm")
@@ -250,5 +254,13 @@ public class GoodsProjectController {
 		goodservice.addOrder(members.getId());
 		
 		return "redirect:/project/orderList";
+	}
+	
+
+	@RequestMapping("/project/logout")
+	public String logout(HttpSession session){
+		logger.info("logout()");
+		session.invalidate();
+		return "redirect:/";
 	}
 }
