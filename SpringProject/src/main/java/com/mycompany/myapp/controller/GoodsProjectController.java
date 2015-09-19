@@ -219,11 +219,18 @@ public class GoodsProjectController {
 		return "project/cartList";                                    
 	}
 	@RequestMapping("/project/deleteCart")
-	public String delete(String memberId) {
+	public String deleteCart(String memberId) {
 		logger.info("deleteCart()");
-		
 		goodservice.deleteCart(memberId);
 		
 		return "redirect:/project/cartList";
+	}
+	
+	@RequestMapping("/project/addOrder")
+	public String addOrder(String memberId){
+		logger.info("addOrder()");
+		goodservice.addOrder(memberId);
+		
+		return "redirect:/project/orderList";
 	}
 }
