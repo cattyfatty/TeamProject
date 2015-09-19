@@ -62,6 +62,20 @@
 			}
 
 		</style>
+		
+		<script>
+		function checkAmount(){
+			var amount = document.getElementById("amount");
+			if(amount == ""){
+				alert("주문수량을 입력해주세요!");
+			}
+			else{
+				location.href("addcart");             
+			}
+			
+		}
+		
+		</script>
 	</head>
 	
 	<body>
@@ -88,13 +102,13 @@
 		<div id="part2">
 			<div id="part2_1">
 				<span class="title">주문수량</span>
-				<input type="text" name="amount"/>
+				<input type="text" id="amount" name="amount"/>
 			</div>
 		</div>
 		
 		<div id="buttonGroup">
 			<a href="goodsList?pageNo=${pageNo}">목록</a>
-			<a href="addCart">장바구니에 넣기</a>
+			<a onclick="checkAmount()">장바구니에 넣기</a>
 		</div>		
 	</body>
 </html>
