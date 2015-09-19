@@ -160,8 +160,8 @@ public class GoodsProjectController {
 	Cart cart =new Cart();
 	
 	Members mem=(Members) session.getAttribute("member");
-	cart.setmemberId(mem.getId());
-	cart.setcartAmount(amount);
+	cart.setMember_id(mem.getId());
+	cart.setCart_amount(amount);
 	cart.setGoods_no(goods.getNo());
 	goodservice.addCart(cart);
 	return "redirect:/project/goodsList";
@@ -215,26 +215,39 @@ public class GoodsProjectController {
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
-		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("stotalGroupNo", totalGroupNo);
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("cartlist", cartList);
+		model.addAttribute("cartList", cartList);
+		
+		List<Goods> goodsList = new ArrayList<>();
+		for(Cart cart : cartList) {
+			Goods goods = goodservice.getGoods(cart.getGoods_no());
+			goodsList.add(goods);
+		}
+		model.addAttribute("goodsList", goodsList);
 		
 		return "project/cartList";                                    
 	}
 	@RequestMapping("/project/deleteCart")
-	public String deleteCart(String memberId) {
+	public String deleteCart(HttpSession session) {
 		logger.info("deleteCart()");
-		goodservice.deleteCart(memberId);
+		Members members = (Members) session.getAttribute("member");
+		goodservice.deleteCart(members.getId());
 		
 		return "redirect:/project/cartList";
 	}
 	
 	@RequestMapping("/project/addOrder")
-	public String addOrder(String memberId){
+	public String addOrder(HttpSession session,Model model){
 		logger.info("addOrder()");
-		goodservice.addOrder(memberId);
+		
+		Cart cart = new Cart();
+		Members members = (Members) session.getAttribute("member");
+		cart.setMember_id(members.getId());
+		model.addAttribute("cart", cart);
+		goodservice.addOrder(members.getId());
 		
 		return "redirect:/project/orderList";
 	}

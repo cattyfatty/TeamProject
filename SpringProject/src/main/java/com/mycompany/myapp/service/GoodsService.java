@@ -73,8 +73,22 @@ public class GoodsService {
 	public void addOrder(String memberId) {
 		List<Cart> cartList = getCart(memberId);
 		deleteCart(memberId);
+		int sumPrice= 0;
+		Order order = new Order();
 		for (Cart cart : cartList) {
+			sumPrice += cart.getCart_amount()*getGoods(cart.getGoods_no()).getPrice();
+		}
+		order.setMemberid(memberId);
+		order.setOrderPrice(sumPrice);
+		int orderNo = ordersDao.insert(order);
+		
+		for(Cart cart : cartList) {
+			OrderItem item = new OrderItem();
+			item.setGoodsItemNo(cart.getGoods_no());
+			item.setOrderAmount(cart.getCart_amount());
+			item.setOrderNo(orderNo);
 			
+			addOrderItems(item);
 		}
 		
 	}
@@ -94,10 +108,7 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Orders ���� ����
-	public void addOrder(Order orders) {
-		ordersDao.insert(orders);
-	}
+	
 	
 	public List<Order> getOrders(String memberId) {
 		List<Order> list = ordersDao.selectByMemberId(memberId);

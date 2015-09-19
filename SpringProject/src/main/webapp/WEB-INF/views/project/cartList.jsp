@@ -90,22 +90,27 @@
 			<tr>
 				<th style="width: 50px">상품번호</th>
 				<th>상품명</th>
+				<th style="width: 60px">단일가격</th>
 				<th style="width: 40px">수량</th>
-				<th style="width: 60px">가격</th>
-				<th style="width: 60px">총가격</th>
+				<!-- <th style="width: 60px">총가격</th> -->
 				<th style="width: 80px">날짜</th>
 			</tr>
-	
-			<c:forEach var="cart" items="${cartlist}">
+			<% int price = 0; %>
+			
 				<tr>
-					<td>${cart.}</td>
-					<td>${cart.name}</td>
-					<td>${cart.amount}</td>
-					<td>${cart.price}</td>
-					<td>${cart.amount * cart.price}</td>
-					<td>${cart.date}</td>
-				</tr>
+			<c:forEach var="goods" items="${goodsList}">
+					<td>${goods.no}</td>
+					<td>${goods.name}</td>
+					<td>${goods.price}</td>
 			</c:forEach>
+			<c:forEach var="cart" items="${cartList}">
+					<td>${cart.cart_amount}</td>
+					<td>${cart.cart_date}</td>
+			</c:forEach>
+				</tr>
+			
+					<%-- <td>${cart.price}</td> --%>
+					<%-- <td>${cart.amount * cart.price}</td> --%>
 		</table>
 	
 		<div id="pager">
