@@ -12,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mycompany.myapp.dto.Cart;
-import com.mycompany.myapp.dto.Goods;
-import com.mycompany.myapp.dto.Members;
-import com.mycompany.myapp.dto.Order;
+import com.mycompany.myapp.dto.*;
 import com.mycompany.myapp.service.GoodsService;
 //commit
 @Controller
@@ -160,16 +157,17 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/orderdetail")
 
-	public String orderdetail(String memberId, Model model) {
+	public String orderdetail(int orderNo, Model model) {
 		
-		List<Order> list = goodservice.getOrders(memberId);
+		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
 		
 		
-		model.addAttribute("list", list);
+		model.addAttribute("orderItem", orderItem);
 		
-		return "project/orderList";
+		return "project/orderDetail";
 		
 	}
+	
 	@RequestMapping("/project/cartList")
 	public String projectCartList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
 		logger.info("project-cartList");
