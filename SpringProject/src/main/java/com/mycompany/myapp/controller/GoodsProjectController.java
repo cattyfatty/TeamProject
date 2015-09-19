@@ -109,23 +109,15 @@ public class GoodsProjectController {
 		session.setAttribute("pageNo", pageNo);
 		Members mem = (Members) session.getAttribute("member");
 
-		List<Order> orderlist = goodservice.getOrders(mem.getId());
-		
-		List<Members> memberlist = new ArrayList<Members>();
-		for(Order order : orderlist){
-			Members member = goodservice.getMembers(order.getMemberid());
-			memberlist.add(member);
-		}
-		
-		model.addAttribute("orderlist", orderlist);
+
 		
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		int totalBoardNo = goodservice.getTotalBoardNo();
+		int totalOrderNo = goodservice.getTotalOrderNo();
 		
-		int totalPageNo = totalBoardNo / rowsPerPage;
-		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
+		int totalPageNo = totalOrderNo / rowsPerPage;
+		if(totalOrderNo % rowsPerPage > 0) { totalPageNo += 1; }
 		
 		int totalGroupNo = totalPageNo / pagesPerGroup;
 		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
@@ -135,7 +127,13 @@ public class GoodsProjectController {
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		//List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
+		List<Order> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage, mem.getId());
+		
+		List<Members> memberlist = new ArrayList<Members>();
+		for(Order order : orderlist){
+			Members member = goodservice.getMembers(order.getMemberid());
+			memberlist.add(member);
+		}
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -167,9 +165,27 @@ public class GoodsProjectController {
 	return "redirect:/project/goodsList";
 	}
 	
+	
 	@RequestMapping("/project/orderdetail")
-	public String orderdetail(int orderNo, Model model) {
-		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
+	public String orderdetail(int orderNo, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
+		
+		int rowsPerPage = 10;
+		int pagesPerGroup = 5;
+		
+		int totalOrderNo = goodservice.getTotalOrderItemNo();
+		
+		int totalPageNo = totalOrderNo / rowsPerPage;
+		if(totalOrderNo % rowsPerPage > 0) { totalPageNo += 1; }
+		
+		int totalGroupNo = totalPageNo / pagesPerGroup;
+		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
+		
+		int groupNo = (pageNo - 1) / pagesPerGroup + 1;
+		int startPageNo = (groupNo - 1) * pagesPerGroup + 1;
+		int endPageNo = startPageNo + pagesPerGroup - 1;
+		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
+		
+		List<OrderItem> orderItem = goodservice.getOrderItemPage(orderNo, pageNo, rowsPerPage);
 		
 		List<Goods> goodslist = new ArrayList<Goods>();
 		for(OrderItem item : orderItem){
@@ -177,7 +193,12 @@ public class GoodsProjectController {
 			goodslist.add(goods);
 		}
 		
-
+		model.addAttribute("pagesPerGroup", pagesPerGroup);
+		model.addAttribute("totalPageNo", totalPageNo);
+		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderItem", orderItem);
 		model.addAttribute("goodslist", goodslist);

@@ -50,15 +50,16 @@ public class OrderDao {
 		return rows;
 	}
 
-	public List<Order> selectByPage(int pageNo, int rowsPerPage) {
+	public List<Order> selectByPage(int pageNo, int rowsPerPage, String memberId) {
 
 		String sql = "";
 		sql += "select order_no, order_price, member_id ";
 		sql += " from orders ";
+		sql += " where member_id=? ";
 		sql += " order by order_no desc ";
 		sql += "limit ?,?";
 
-		List<Order> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
+		List<Order> list = jdbcTemplate.query(sql, new Object[] { memberId, (pageNo - 1) * rowsPerPage, rowsPerPage },
 				new RowMapper<Order>() {
 
 					@Override
@@ -115,6 +116,12 @@ public class OrderDao {
 
 		);
 		return list;
+	}
+
+		public int selectCount() {
+		String sql ="select count(*) from orders ";
+		int rows = jdbcTemplate.queryForObject(sql, Integer.class);
+		return rows;
 	}
 
 }

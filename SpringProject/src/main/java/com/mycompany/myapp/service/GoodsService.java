@@ -143,6 +143,33 @@ public class GoodsService {
 	}
 	
 	
+	public int getTotalOrderNo() {
+		int rows = ordersDao.selectCount();
+			
+			return rows;
+
+		}
+
+		public List<Order> getOrderPage(int pageNo, int rowsPerPage, String memberId) {
+			
+			List<Order> list = ordersDao.selectByPage(pageNo, rowsPerPage, memberId);
+			
+			return list;
+		}
+	
+		public int getTotalOrderItemNo() {
+			int rows = ordersDao.selectCount();
+				
+				return rows;
+
+			}
+
+		public List<OrderItem> getOrderItemPage(int orderNo,int pageNo, int rowsPerPage) {
+			
+				List<OrderItem> list = orderItemsDao.selectByPage(orderNo, pageNo, rowsPerPage);
+				
+				return list;
+			}
 
 	// -----------------------------------------------------------------------------------------
 }

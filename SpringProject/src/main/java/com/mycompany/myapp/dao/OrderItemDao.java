@@ -46,14 +46,15 @@ public class OrderItemDao {
 	
 	}
 	
-	public List<OrderItem> selectByPage(int pageNo, int rowsPerPage)  {
+	public List<OrderItem> selectByPage(int orderNo, int pageNo, int rowsPerPage)  {
 		String sql = "";
 		sql += "select orderitem_no, order_no, goods_no, orderitem_amount ";
 		sql += "from orderitems ";
+		sql += "where order_no=? ";
 		sql += "order by orderitem_no desc ";
 		sql += "limit ?,?";
 
-		List<OrderItem> list = jdbcTemplate.query(sql, new Object[] { (pageNo - 1) * rowsPerPage, rowsPerPage },
+		List<OrderItem> list = jdbcTemplate.query(sql, new Object[] { orderNo, (pageNo - 1) * rowsPerPage, rowsPerPage },
 				new RowMapper<OrderItem>() {
 					@Override
 					public OrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
