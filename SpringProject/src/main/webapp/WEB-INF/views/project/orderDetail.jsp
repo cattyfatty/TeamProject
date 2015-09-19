@@ -78,7 +78,7 @@
 	<body>
 		<h4>주문상세정보</h4>
 		
-		주분번호: <span>${orderItem.orderNo}</span>
+		주분번호: <span>${orderNo}</span>
 		
 		<table>
 			<tr>
@@ -91,8 +91,10 @@
 			<c:forEach var="orderItem" items="${orderDetail}">
 				<tr>
 					<td>${orderItem.orderNo}</td>
-					<td><a href="orderDetail?memberid=${orderItem.memberid}">${orderItem.memberid}</a></td>
+					<td>${orderItem.goodsItemNo}</td>
+					<td>${orderItem.orderAmount}</td>
 					<td>${orderItem.orderPrice}</td>
+					
 				
 				</tr>
 			</c:forEach>
