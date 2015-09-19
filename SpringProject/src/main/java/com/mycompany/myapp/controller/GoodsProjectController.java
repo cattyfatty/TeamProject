@@ -1,19 +1,17 @@
   package com.mycompany.myapp.controller;
 
-import java.util.List;
+import java.util.*;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.slf4j.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.web.bind.annotation.*;
 
 import com.mycompany.myapp.dto.*;
-import com.mycompany.myapp.service.GoodsService;
+import com.mycompany.myapp.service.*;
 //commit
 @Controller
 public class GoodsProjectController {
@@ -146,6 +144,7 @@ public class GoodsProjectController {
 	}
 	
 	//addcart
+
 	@RequestMapping("/project/addCart")
 
 	public String addCart(int amount,int goodsNo,HttpSession session){
@@ -175,13 +174,31 @@ public class GoodsProjectController {
 		
 		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
 		
+		List<Goods> goodslist = new ArrayList<Goods>();
+		for(OrderItem item : orderItem){
+			Goods goods = goodservice.getGoods(item.getGoodsItemNo());
+			goodslist.add(goods);
+		}
 		
-		
+		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderItem", orderItem);
+		model.addAttribute("goodslist", goodslist);
 		
 		return "project/orderDetail";
 		
 	}
+	
+	@RequestMapping("/project/addCart")
+	public String addCart(Cart cart,HttpSession session){
+		
+		
+		
+		goodservice.addCart(cart);
+		
+		return "redirect:/project/goodList";
+	}
+	
+
 	
 	@RequestMapping("/project/cartList")
 	public String projectCartList(Model model, @RequestParam(defaultValue = "1") int pageNo, HttpSession session) {
