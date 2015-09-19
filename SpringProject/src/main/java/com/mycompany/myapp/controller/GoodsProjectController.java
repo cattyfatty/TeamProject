@@ -144,6 +144,8 @@ public class GoodsProjectController {
 
 	
 	}
+	
+	//addcart
 	@RequestMapping("/project/addCart")
 
 	public String addCart(int amount,int goodsNo,HttpSession session){
