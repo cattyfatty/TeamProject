@@ -153,28 +153,16 @@ public class GoodsProjectController {
 	Cart cart = new Cart();
 
 	Members mem=(Members) session.getAttribute("member");
-
 	cart.setmemberId(mem.getId());
-
 	cart.setcartAmount(amount);
-
 	cart.setGoods_no(goodsNo);
-
 	goodservice.addCart(cart);
-
-
 	return "redirect:/project/goodList";
-
 	}
-
-
 	
 	@RequestMapping("/project/orderdetail")
-
 	public String orderdetail(int orderNo, Model model) {
-		
 		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
-		
 		
 		
 		model.addAttribute("orderItem", orderItem);
