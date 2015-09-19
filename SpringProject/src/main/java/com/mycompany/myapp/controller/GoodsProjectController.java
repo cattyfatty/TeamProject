@@ -17,7 +17,7 @@ import com.mycompany.myapp.dto.Goods;
 import com.mycompany.myapp.dto.Members;
 import com.mycompany.myapp.dto.Order;
 import com.mycompany.myapp.service.GoodsService;
-
+//commit
 @Controller
 public class GoodsProjectController {
 
@@ -29,7 +29,7 @@ public class GoodsProjectController {
 	@RequestMapping("/project/home")
 	public String projectHome() {
 		logger.info("project-home()");
-		return "home";
+		return "project/home";
 	}
 	
 	@RequestMapping("/project/loginForm")
@@ -44,7 +44,7 @@ public class GoodsProjectController {
 		Members loggedIn = goodservice.loginMember(member);
 		
 		session.setAttribute("member", loggedIn);
-		return "redirect:/project/goodsList";
+		return "redirect:/project/home";
 	}
 	
 	@RequestMapping("/project/joinForm")
@@ -54,10 +54,9 @@ public class GoodsProjectController {
 	}
 	
 	@RequestMapping("/project/join")
-	public String projectJoin(Members member) {
+	public String projectJoin() {
 		logger.info("project-join");
-		goodservice.joinMember(member);
-		return "redirect:/project/loginForm";
+		return "redirect:/project/home";
 	}
 	
 	@RequestMapping("/project/goodsList")
@@ -105,7 +104,7 @@ public class GoodsProjectController {
 		Goods goods =goodservice.getGoods(goodsNo);
 		model.addAttribute("goods", goods);
 		return "project/goodsDetail";
-		
+
 	}
 
 	
@@ -151,6 +150,9 @@ public class GoodsProjectController {
 	
 	@RequestMapping("/project/addCart")
 	public String addCart(Cart cart,HttpSession session){
+		
+		
+		
 		goodservice.addCart(cart);
 		
 		return "redirect:/project/goodList";
