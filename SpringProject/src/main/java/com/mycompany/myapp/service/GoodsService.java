@@ -70,7 +70,7 @@ public class GoodsService {
 
 	// -----------------------------------------------------------------------------------------
 	// 주문관련
-	public void order(String memberId) {
+	public void addOrder(String memberId) {
 		List<Cart> cartList = getCart(memberId);
 		deleteCart(memberId);
 		for (Cart cart : cartList) {

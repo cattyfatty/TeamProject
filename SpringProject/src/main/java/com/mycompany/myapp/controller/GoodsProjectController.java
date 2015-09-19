@@ -187,17 +187,6 @@ public class GoodsProjectController {
 		return "project/orderDetail";
 		
 	}
-	
-	@RequestMapping("/project/addCart")
-	public String addCart(Cart cart,HttpSession session){
-		
-		
-		
-		goodservice.addCart(cart);
-		
-		return "redirect:/project/goodList";
-	}
-	
 
 	
 	@RequestMapping("/project/cartList")
@@ -236,11 +225,18 @@ public class GoodsProjectController {
 		return "project/cartList";                                    
 	}
 	@RequestMapping("/project/deleteCart")
-	public String delete(String memberId) {
+	public String deleteCart(String memberId) {
 		logger.info("deleteCart()");
-		
 		goodservice.deleteCart(memberId);
 		
 		return "redirect:/project/cartList";
+	}
+	
+	@RequestMapping("/project/addOrder")
+	public String addOrder(String memberId){
+		logger.info("addOrder()");
+		goodservice.addOrder(memberId);
+		
+		return "redirect:/project/orderList";
 	}
 }
