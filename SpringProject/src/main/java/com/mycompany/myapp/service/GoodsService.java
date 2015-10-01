@@ -37,16 +37,20 @@ public class GoodsService {
 	}
 
 	public Members loginMember(Members member) {
-		Members isExist = memberDao.selectByPk(member.getId());
-		if (isExist.getPassword().equals(member.getPassword())) {
+		Members isExist = null;
+		try{
+			isExist = memberDao.selectByPk(member.getId());
+		} catch(Exception e) {
+			System.out.println("check id or pw");
+		}
+		if (isExist != null && isExist.getPassword().equals(member.getPassword())) {
 			return isExist;
-		} else
+		} else{
+			System.out.println("로그인실패");
 			return null;
+		}
 	}
-	// -----------------------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------------------
-	// Cart ���� ����
 	public void addCart(Cart cart) {
 		cartDao.insert(cart);
 	}
@@ -73,8 +77,22 @@ public class GoodsService {
 	public void addOrder(String memberId) {
 		List<Cart> cartList = getCart(memberId);
 		deleteCart(memberId);
+		int sumPrice= 0;
+		Order order = new Order();
 		for (Cart cart : cartList) {
+			sumPrice += cart.getCart_amount()*getGoods(cart.getGoods_no()).getPrice();
+		}
+		order.setMemberid(memberId);
+		order.setOrderPrice(sumPrice);
+		int orderNo = ordersDao.insert(order);
+		
+		for(Cart cart : cartList) {
+			OrderItem item = new OrderItem();
+			item.setGoodsItemNo(cart.getGoods_no());
+			item.setOrderAmount(cart.getCart_amount());
+			item.setOrderNo(orderNo);
 			
+			addOrderItems(item);
 		}
 		
 	}
@@ -94,10 +112,7 @@ public class GoodsService {
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
-	// Orders ���� ����
-	public void addOrder(Order orders) {
-		ordersDao.insert(orders);
-	}
+	
 	
 	public List<Order> getOrders(String memberId) {
 		List<Order> list = ordersDao.selectByMemberId(memberId);
@@ -143,6 +158,33 @@ public class GoodsService {
 	}
 	
 	
+	public int getTotalOrderNo() {
+		int rows = ordersDao.selectCount();
+			
+			return rows;
+
+		}
+
+		public List<Order> getOrderPage(int pageNo, int rowsPerPage, String memberId) {
+			
+			List<Order> list = ordersDao.selectByPage(pageNo, rowsPerPage, memberId);
+			
+			return list;
+		}
+	
+		public int getTotalOrderItemNo() {
+			int rows = ordersDao.selectCount();
+				
+				return rows;
+
+			}
+
+		public List<OrderItem> getOrderItemPage(int orderNo,int pageNo, int rowsPerPage) {
+			
+				List<OrderItem> list = orderItemsDao.selectByPage(orderNo, pageNo, rowsPerPage);
+				
+				return list;
+			}
 
 	// -----------------------------------------------------------------------------------------
 }

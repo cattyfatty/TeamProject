@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*, com.mycompany.myapp.dto.* "%>
 
 
 <!DOCTYPE html>
@@ -10,10 +11,7 @@
 	<title>Insert title here</title>
 	<style type="text/css">
 		body{
-			background-color: black;
 			color: white;
-			
-		
 		}
 		h1{
 			text-align: center;
@@ -90,22 +88,41 @@
 			<tr>
 				<th style="width: 50px">상품번호</th>
 				<th>상품명</th>
-				<th style="width: 40px">수량</th>
 				<th style="width: 60px">가격</th>
-				<th style="width: 60px">총가격</th>
+				<th style="width: 40px">수량</th>
+				<!-- <th style="width: 60px">총가격</th> -->
 				<th style="width: 80px">날짜</th>
 			</tr>
-	
-			<c:forEach var="cart" items="${cartlist}">
+					
+				<% 
+				List<Cart> cartList = (List<Cart>)request.getAttribute("cartList");
+				List<Goods> goodsList = (List<Goods>)request.getAttribute("goodsList");
+				for(int i=0; i<cartList.size(); i++) {
+				%>
 				<tr>
-					<td>${cart.}</td>
-					<td>${cart.name}</td>
-					<td>${cart.amount}</td>
-					<td>${cart.price}</td>
-					<td>${cart.amount * cart.price}</td>
-					<td>${cart.date}</td>
+					<td><%=goodsList.get(i).getNo()%></td>
+					<td><%=goodsList.get(i).getName()%></td>
+					<td><%=cartList.get(i).getCart_amount()%>*<%=goodsList.get(i).getPrice()%></td>
+					<td><%=cartList.get(i).getCart_amount()%></td>
+					<td><%=cartList.get(i).getCart_date()%></td>
 				</tr>
+				<%	
+				}
+				%>
+				<%-- <tr>
+			<c:forEach var="goods" items="${goodsList}">
+					<td>${goods.no}</td>
+					<td>${goods.name}</td>
+					<td>${goods.price}</td>
 			</c:forEach>
+			<c:forEach var="cart" items="${cartList}">
+					<td>${cart.cart_amount}</td>
+					<td>${cart.cart_date}</td>
+			</c:forEach>
+				</tr> --%>
+			
+					<%-- <td>${cart.price}</td> --%>
+					<%-- <td>${cart.amount * cart.price}</td> --%>
 		</table>
 	
 		<div id="pager">
