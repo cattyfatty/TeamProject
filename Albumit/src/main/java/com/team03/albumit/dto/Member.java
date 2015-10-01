@@ -1,5 +1,7 @@
 package com.team03.albumit.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Member {
 	private int uid;
 	private String email;
@@ -10,14 +12,14 @@ public class Member {
 	private String img_filesystem_name;
 	private String img_content_type;
 	
-	/*private MultipartFile attach;
+	private MultipartFile attach;
 	
 	public MultipartFile getAttach() {
 		return attach;
 	}
 	public void setAttach(MultipartFile attach) {
 		this.attach = attach;
-	}*/
+	}
 	
 	public int getUid() {
 		return uid;
