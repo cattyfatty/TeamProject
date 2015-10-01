@@ -37,9 +37,13 @@ public class GoodsProjectController {
 	public String projectLogin(Members member, HttpSession session) {
 		logger.info("project-login()");
 		Members loggedIn = goodservice.loginMember(member);
-		
-		session.setAttribute("member", loggedIn);
-		return "redirect:/project/goodsList";
+		if(loggedIn != null){
+			session.setAttribute("member", loggedIn);
+			return "redirect:/project/goodsList";
+		}
+		else{
+			return "project/failLogin";
+		}
 	}
 	
 	@RequestMapping("/project/joinForm")
@@ -109,23 +113,15 @@ public class GoodsProjectController {
 		session.setAttribute("pageNo", pageNo);
 		Members mem = (Members) session.getAttribute("member");
 
-		List<Order> orderlist = goodservice.getOrders(mem.getId());
-		
-		List<Members> memberlist = new ArrayList<Members>();
-		for(Order order : orderlist){
-			Members member = goodservice.getMembers(order.getMemberid());
-			memberlist.add(member);
-		}
-		
-		model.addAttribute("orderlist", orderlist);
+
 		
 		int rowsPerPage = 10;
 		int pagesPerGroup = 5;
 		
-		int totalBoardNo = goodservice.getTotalBoardNo();
+		int totalOrderNo = goodservice.getTotalOrderNo();
 		
-		int totalPageNo = totalBoardNo / rowsPerPage;
-		if(totalBoardNo % rowsPerPage > 0) { totalPageNo += 1; }
+		int totalPageNo = totalOrderNo / rowsPerPage;
+		if(totalOrderNo % rowsPerPage > 0) { totalPageNo += 1; }
 		
 		int totalGroupNo = totalPageNo / pagesPerGroup;
 		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
@@ -135,7 +131,13 @@ public class GoodsProjectController {
 		int endPageNo = startPageNo + pagesPerGroup - 1;
 		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
 		
-		//List<Orders> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage);
+		List<Order> orderlist = goodservice.getOrderPage(pageNo, rowsPerPage, mem.getId());
+		
+		List<Members> memberlist = new ArrayList<Members>();
+		for(Order order : orderlist){
+			Members member = goodservice.getMembers(order.getMemberid());
+			memberlist.add(member);
+		}
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
@@ -160,16 +162,34 @@ public class GoodsProjectController {
 	Cart cart =new Cart();
 	
 	Members mem=(Members) session.getAttribute("member");
-	cart.setmemberId(mem.getId());
-	cart.setcartAmount(amount);
+	cart.setMember_id(mem.getId());
+	cart.setCart_amount(amount);
 	cart.setGoods_no(goods.getNo());
 	goodservice.addCart(cart);
 	return "redirect:/project/goodsList";
 	}
 	
-	@RequestMapping("/project/orderdetail")
-	public String orderdetail(int orderNo, Model model) {
-		List<OrderItem> orderItem = goodservice.getOrderItems(orderNo);
+	
+	@RequestMapping("/project/orderDetail")
+	public String orderdetail(int orderNo, @RequestParam(defaultValue="1") int pageNo, HttpSession session, Model model) {
+		
+		int rowsPerPage = 10;
+		int pagesPerGroup = 5;
+		
+		int totalOrderItemNo = goodservice.getTotalOrderItemNo();
+		
+		int totalPageNo = totalOrderItemNo / rowsPerPage;
+		if(totalOrderItemNo % rowsPerPage > 0) { totalPageNo += 1; }
+		
+		int totalGroupNo = totalPageNo / pagesPerGroup;
+		if(totalPageNo % pagesPerGroup > 0) { totalGroupNo += 1; }
+		
+		int groupNo = (pageNo - 1) / pagesPerGroup + 1;
+		int startPageNo = (groupNo - 1) * pagesPerGroup + 1;
+		int endPageNo = startPageNo + pagesPerGroup - 1;
+		if(groupNo == totalGroupNo) { endPageNo = totalPageNo; }
+		
+		List<OrderItem> orderItem = goodservice.getOrderItemPage(orderNo, pageNo, rowsPerPage);
 		
 		List<Goods> goodslist = new ArrayList<Goods>();
 		for(OrderItem item : orderItem){
@@ -177,7 +197,12 @@ public class GoodsProjectController {
 			goodslist.add(goods);
 		}
 		
-
+		model.addAttribute("pagesPerGroup", pagesPerGroup);
+		model.addAttribute("totalPageNo", totalPageNo);
+		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
 		model.addAttribute("orderNo", orderNo);
 		model.addAttribute("orderItem", orderItem);
 		model.addAttribute("goodslist", goodslist);
@@ -215,27 +240,48 @@ public class GoodsProjectController {
 		
 		model.addAttribute("pagesPerGroup", pagesPerGroup);
 		model.addAttribute("totalPageNo", totalPageNo);
-		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("stotalGroupNo", totalGroupNo);
 		model.addAttribute("groupNo", groupNo);
 		model.addAttribute("startPageNo", startPageNo);
 		model.addAttribute("endPageNo", endPageNo);
-		model.addAttribute("cartlist", cartList);
+		model.addAttribute("cartList", cartList);
+		
+		List<Goods> goodsList = new ArrayList<>();
+		for(Cart cart : cartList) {
+			Goods goods = goodservice.getGoods(cart.getGoods_no());
+			goodsList.add(goods);
+		}
+		model.addAttribute("goodsList", goodsList);
 		
 		return "project/cartList";                                    
 	}
 	@RequestMapping("/project/deleteCart")
-	public String deleteCart(String memberId) {
+	public String deleteCart(HttpSession session) {
 		logger.info("deleteCart()");
-		goodservice.deleteCart(memberId);
+		Members members = (Members) session.getAttribute("member");
+		goodservice.deleteCart(members.getId());
 		
 		return "redirect:/project/cartList";
 	}
 	
 	@RequestMapping("/project/addOrder")
-	public String addOrder(String memberId){
+	public String addOrder(HttpSession session,Model model){
 		logger.info("addOrder()");
-		goodservice.addOrder(memberId);
+		
+		Cart cart = new Cart();
+		Members members = (Members) session.getAttribute("member");
+		cart.setMember_id(members.getId());
+		model.addAttribute("cart", cart);
+		goodservice.addOrder(members.getId());
 		
 		return "redirect:/project/orderList";
+	}
+	
+
+	@RequestMapping("/project/logout")
+	public String logout(HttpSession session){
+		logger.info("logout()");
+		session.invalidate();
+		return "redirect:/";
 	}
 }

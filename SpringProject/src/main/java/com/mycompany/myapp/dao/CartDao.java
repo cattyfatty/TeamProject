@@ -34,8 +34,8 @@ public class CartDao {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
 				PreparedStatement pstmt = conn.prepareStatement(sql, new String[]{"cart_no"});
-				pstmt.setInt(1, cart.getcartAmount());
-				pstmt.setString(2,cart.getmemberId());
+				pstmt.setInt(1, cart.getCart_amount());
+				pstmt.setString(2,cart.getMember_id());
 				pstmt.setInt(3, cart.getGoods_no());
 				return pstmt;
 			}
@@ -48,10 +48,10 @@ public class CartDao {
 			String sql = "update carts set cart_amount=?, member_id =?, goods_no=? where cart_no=?";
 			int rows = jdbcTemplate.update(
 						sql,
-						cart.getcartAmount(),
-						cart.getmemberId(),
+						cart.getCart_amount(),
+						cart.getMember_id(),
 						cart.getGoods_no(),
-						cart.getcartNo()
+						cart.getCart_no()
 					);
 		
 			return rows;
@@ -77,10 +77,10 @@ public class CartDao {
 					@Override
 					public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Cart cart= new Cart();
-						cart.setcartNo( rs.getInt("cart_no") );
-						cart.setcartAmount(rs.getInt("cart_amount"));
-						cart.setcartDate(rs.getDate("cart_date"));
-						cart.setmemberId(rs.getString("member_id"));
+						cart.setCart_no( rs.getInt("cart_no") );
+						cart.setCart_amount(rs.getInt("cart_amount"));
+						cart.setCart_date(rs.getDate("cart_date"));
+						cart.setMember_id(rs.getString("member_id"));
 						cart.setGoods_no(rs.getInt("goods_no"));
 						return cart;
 					}
@@ -98,10 +98,10 @@ public class CartDao {
 			@Override
 			public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Cart cart= new Cart();
-				cart.setcartNo( rs.getInt("cart_no") );
-				cart.setcartAmount(rs.getInt("cart_amount"));
-				cart.setcartDate(rs.getDate("cart_date"));
-				cart.setmemberId(rs.getString("member_id"));
+				cart.setCart_no( rs.getInt("cart_no") );
+				cart.setCart_amount(rs.getInt("cart_amount"));
+				cart.setCart_date(rs.getDate("cart_date"));
+				cart.setMember_id(rs.getString("member_id"));
 				cart.setGoods_no(rs.getInt("goods_no"));
 				return cart;
 			}
@@ -115,7 +115,7 @@ public class CartDao {
 	
 	public List<Cart> selectByPage(int pageNo, int rowsPerPage, String memberId){
 		String sql = "";
-		sql += " select cart_no, cart_amount, cart_date, goods_no ";
+		sql += "select cart_no, cart_amount, cart_date, goods_no, member_id ";
 		sql += "from carts ";
 		sql += "where member_id=? ";
 		sql += "order by cart_no desc ";
@@ -129,10 +129,10 @@ public class CartDao {
 					public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
 						
 						Cart cart = new Cart();
-						cart.setcartNo( rs.getInt("cart_no") );
-						cart.setcartAmount(rs.getInt("cart_amount"));
-						cart.setcartDate(rs.getDate("cart_date"));
-						cart.setmemberId(rs.getString("member_id"));
+						cart.setCart_no( rs.getInt("cart_no") );
+						cart.setCart_amount(rs.getInt("cart_amount"));
+						cart.setCart_date(rs.getDate("cart_date"));
+						cart.setMember_id(rs.getString("member_id"));
 						cart.setGoods_no(rs.getInt("goods_no"));
 						return cart;
 					}

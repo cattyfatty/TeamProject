@@ -9,29 +9,28 @@ public class Cart {
 	private Date cart_date;
 	private String member_id;
 	private int goods_no;
-
-	public int getcartNo() {
+	public int getCart_no() {
 		return cart_no;
 	}
-	public void setcartNo(int cart_no) {
+	public void setCart_no(int cart_no) {
 		this.cart_no = cart_no;
 	}
-	public int getcartAmount() {
+	public int getCart_amount() {
 		return cart_amount;
 	}
-	public void setcartAmount(int cart_amount) {
+	public void setCart_amount(int cart_amount) {
 		this.cart_amount = cart_amount;
 	}
-	public Date getcartDate() {
+	public Date getCart_date() {
 		return cart_date;
 	}
-	public void setcartDate(Date cart_date) {
+	public void setCart_date(Date cart_date) {
 		this.cart_date = cart_date;
 	}
-	public String getmemberId() {
+	public String getMember_id() {
 		return member_id;
 	}
-	public void setmemberId(String member_id) {
+	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
 	public int getGoods_no() {
@@ -41,5 +40,5 @@ public class Cart {
 		this.goods_no = goods_no;
 	}
 
-
+	
 }

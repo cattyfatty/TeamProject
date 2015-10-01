@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util. *, com.mycompany.myapp.dto.*" %>
 
 <!DOCTYPE html>
 <html>
@@ -88,22 +89,20 @@
 				<th style="width:60px">가격</th>
 			</tr>
 			
-			<c:forEach var="orderItem" items="${orderItem}">
-				<tr>
-					<td>${orderItem.goodsItemNo}</td>
-			</c:forEach>
 			
-			<c:forEach var="goodslist" items="${goodslist}">
-					<td>${goodslist.getName}</td>
-			</c:forEach>
 			
-			<c:forEach var="orderItem" items="${orderItem}">
-					<td>${orderItem.orderAmount}</td>
-					<td>${orderItem.orderPrice}</td>
-			</c:forEach>
-					
-				
-				</tr>
+			<%
+			List<OrderItem> orderItem = (List<OrderItem>)request.getAttribute("orderItem");
+			List<Goods> goodslist = (List<Goods>)request.getAttribute("goodslist");
+			for(int i=0; i<orderItem.size(); i++){
+			%>
+			<tr>
+				<td><%=orderItem.get(i).getGoodsItemNo()%></td>
+				<td><%=goodslist.get(i).getName()%></td>
+				<td><%=orderItem.get(i).getOrderAmount()%></td>
+				<td><%=goodslist.get(i).getPrice()%></td>
+			</tr>
+			<%} %>
 			
 		</table>
 		
